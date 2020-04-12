@@ -23,12 +23,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai" />
+            android:text="The Center for Systems Science and Engineering (CSSE) at JHU" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
-            android:text="Poslední aktualizace"
+            android:text="Poslední aktualizace dat v mobilní aplikaci"
             android:textColor="@color/primaryTextColor"
             android:textSize="20dp"
             />

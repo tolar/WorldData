@@ -34,7 +34,7 @@ public class InfoActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        ((TextView)findViewById(R.id.updated)).setText(df.format("hh:mm dd.MM.yyyy", getUpdatedFromPreferences()));
+        ((TextView)findViewById(R.id.updated)).setText(df.format("HH:mm dd.MM.yyyy", getUpdatedFromPreferences()));
     }
 
     private Date getUpdatedFromPreferences() {

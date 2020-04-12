@@ -111,7 +111,7 @@ public class Country {
         }
     }
 
-    public class CountryCode {
+    public static class CountryCode {
         private String iso2;
         private String iso3;
 

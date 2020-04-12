@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Corona World</string>
+    <string name="app_name">Covid-19 ve světě</string>
+    <string name="preference_file_key">cz.vaclavtolar.corona_world.PREFERENCE_FILE_KEY</string>
 </resources>

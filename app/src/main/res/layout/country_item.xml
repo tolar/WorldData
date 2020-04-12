@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    >
+    
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
+        <TableRow android:padding="2dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:layout_gravity="left"
+                >
+
+                <ImageView
+                    android:id="@+id/flag"
+                    android:layout_height="25sp"
+                    android:layout_width="wrap_content"
+                    android:scaleType="fitStart"
+                    />
+                <TextView
+                    android:id="@+id/country"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="2sp"
+                    android:textAlignment="viewStart"
+
+                    android:text="Country"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/confirmed"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="textEnd"
+                android:text=""
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/deaths"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="textEnd"
+                android:text=""
+                android:textSize="24sp" />
+
+
+
+        </TableRow>
+
+
+    </TableLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

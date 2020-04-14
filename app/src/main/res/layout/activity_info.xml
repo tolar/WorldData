@@ -7,9 +7,15 @@
     android:background="@color/colorWhiteBackground"
     tools:context=".activity.InfoActivity">
 
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
         android:padding="15dp"
         android:orientation="vertical">
 

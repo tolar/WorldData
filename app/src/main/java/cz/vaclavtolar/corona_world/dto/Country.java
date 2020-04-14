@@ -10,6 +10,7 @@ public class Country {
     @JsonAlias("countryregion")
     private String countryRegion;
     private String countryCzechName;
+    private String countryCzechNameNoDiacritics;
     private float deaths;
     @JsonAlias("lastupdate")
     private String lastUpdate;
@@ -17,6 +18,7 @@ public class Country {
     @JsonAlias("provincestate")
     private String provinceState;
     private float recovered;
+    private float active;
 
     public float getConfirmed() {
         return confirmed;
@@ -70,6 +72,14 @@ public class Country {
         this.countryCzechName = countryCzechName;
     }
 
+    public String getCountryCzechNameNoDiacritics() {
+        return countryCzechNameNoDiacritics;
+    }
+
+    public void setCountryCzechNameNoDiacritics(String countryCzechNameNoDiacritics) {
+        this.countryCzechNameNoDiacritics = countryCzechNameNoDiacritics;
+    }
+
     public void setDeaths(float deaths) {
         this.deaths = deaths;
     }
@@ -88,6 +98,14 @@ public class Country {
 
     public void setRecovered(float recovered) {
         this.recovered = recovered;
+    }
+
+    public float getActive() {
+        return active;
+    }
+
+    public void setActive(float active) {
+        this.active = active;
     }
 
     public class Location {

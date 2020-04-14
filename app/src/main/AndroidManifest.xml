@@ -11,12 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.InfoActivity"></activity>
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:launchMode="singleInstance"></activity>
+        <activity
+            android:name=".activity.InfoActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
     </application>

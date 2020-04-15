@@ -4,11 +4,11 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "cz.vaclavtolar.corona_world"
+        applicationId "cz.vaclavtolar.corona_stats"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.1"
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

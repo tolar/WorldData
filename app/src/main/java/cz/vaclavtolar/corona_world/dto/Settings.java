@@ -2,8 +2,8 @@ package cz.vaclavtolar.corona_world.dto;
 
 public class Settings {
 
-    private Column column1 = Column.CONFIRMED;
-    private Column column2 = Column.DEATHS;
+    private Column column1 = Column.ACTIVE;
+    private Column column2 = Column.RECOVERED;
 
     public Column getColumn1() {
         return column1;
@@ -24,7 +24,6 @@ public class Settings {
     public enum Column {
         CONFIRMED,
         ACTIVE,
-        RECOVERED,
-        DEATHS
+        RECOVERED
     }
 }

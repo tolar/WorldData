@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.activity;
+package cz.vaclavtolar.corona_stats.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,20 +9,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import cz.vaclavtolar.corona_world.R;
-import cz.vaclavtolar.corona_world.dto.Country;
+import cz.vaclavtolar.corona_stats.R;
 
-import static cz.vaclavtolar.corona_world.activity.MainActivity.DATA_UPDATED_KEY;
+import static cz.vaclavtolar.corona_stats.activity.MainActivity.DATA_UPDATED_KEY;
 
 public class InfoActivity extends AppCompatActivity {
 

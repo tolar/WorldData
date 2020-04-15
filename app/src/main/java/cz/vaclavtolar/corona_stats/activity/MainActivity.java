@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.activity;
+package cz.vaclavtolar.corona_stats.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cz.vaclavtolar.corona_world.R;
-import cz.vaclavtolar.corona_world.dto.Country;
-import cz.vaclavtolar.corona_world.dto.Settings;
-import cz.vaclavtolar.corona_world.service.CoronaWorldService;
-import cz.vaclavtolar.corona_world.service.PreferencesUtil;
+import cz.vaclavtolar.corona_stats.R;
+import cz.vaclavtolar.corona_stats.dto.Country;
+import cz.vaclavtolar.corona_stats.dto.Settings;
+import cz.vaclavtolar.corona_stats.service.CoronaWorldService;
+import cz.vaclavtolar.corona_stats.service.PreferencesUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

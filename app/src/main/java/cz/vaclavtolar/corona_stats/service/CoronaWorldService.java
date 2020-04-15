@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.service;
+package cz.vaclavtolar.corona_stats.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cz.vaclavtolar.corona_world.dto.Country;
+import cz.vaclavtolar.corona_stats.dto.Country;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import static cz.vaclavtolar.corona_world.service.CoronavirusApi.BASE_URL;
+import static cz.vaclavtolar.corona_stats.service.CoronavirusApi.BASE_URL;
 
 public class CoronaWorldService {
 

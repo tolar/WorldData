@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.dto;
+package cz.vaclavtolar.corona_stats.dto;
 
 public class Settings {
 

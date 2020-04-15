@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world;
+package cz.vaclavtolar.corona_stats;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.activity;
+package cz.vaclavtolar.corona_stats.activity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,10 +19,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import cz.vaclavtolar.corona_world.R;
-import cz.vaclavtolar.corona_world.dto.Country;
-import cz.vaclavtolar.corona_world.dto.Settings;
-import cz.vaclavtolar.corona_world.service.PreferencesUtil;
+import cz.vaclavtolar.corona_stats.R;
+import cz.vaclavtolar.corona_stats.dto.Country;
+import cz.vaclavtolar.corona_stats.dto.Settings;
+import cz.vaclavtolar.corona_stats.service.PreferencesUtil;
 
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {
 

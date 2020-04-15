@@ -1,8 +1,8 @@
-package cz.vaclavtolar.corona_world.service;
+package cz.vaclavtolar.corona_stats.service;
 
 import java.util.List;
 
-import cz.vaclavtolar.corona_world.dto.Country;
+import cz.vaclavtolar.corona_stats.dto.Country;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

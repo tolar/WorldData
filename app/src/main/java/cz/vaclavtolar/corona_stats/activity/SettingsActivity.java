@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_world.activity;
+package cz.vaclavtolar.corona_stats.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +8,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import cz.vaclavtolar.corona_world.R;
-import cz.vaclavtolar.corona_world.dto.Settings;
-import cz.vaclavtolar.corona_world.service.PreferencesUtil;
+import cz.vaclavtolar.corona_stats.R;
+import cz.vaclavtolar.corona_stats.dto.Settings;
+import cz.vaclavtolar.corona_stats.service.PreferencesUtil;
 
 public class SettingsActivity extends AppCompatActivity {
 

@@ -29,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -152,7 +153,13 @@ public class MainActivity extends AppCompatActivity {
                 countriesAdapter.notifyDataSetChanged();
             }
         });
-        countriesAdapter.notifyDataSetChanged();
+
+        // nacteme data z preferences
+        List<Country> countries = getDataFromPreferences();
+        if (countries != null || countries.isEmpty()) {
+            countriesAdapter.setCountries(countries);
+            countriesAdapter.notifyDataSetChanged();
+        }
     }
 
     private void prepareMetadataData(Country ctr) {

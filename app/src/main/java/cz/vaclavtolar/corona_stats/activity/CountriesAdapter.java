@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.os.ConfigurationCompat;
+import androidx.core.os.LocaleListCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
@@ -71,7 +73,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 flagImageView.setImageResource(World.getFlagOf(country.getCountryRegion()));
             }
             TextView countryTextView = itemView.findViewById(R.id.country);
-            if (country.getCountryCzechName() != null) {
+
+            if (isSetCzechLanguage() && country.getCountryCzechName() != null) {
                 countryTextView.setText(country.getCountryCzechName());
             } else {
                 countryTextView.setText(country.getCountryRegion());
@@ -109,7 +112,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             List<Country> filteredCountries = new ArrayList<>();
             for (int i = 0; i < countries.size(); i++) {
                 Country country = countries.get(i);
-                if (country.getCountryCzechNameNoDiacritics() != null && country.getCountryCzechNameNoDiacritics().contains(query)) {
+
+                String countryName = country.getCountryRegion().toLowerCase();
+                if (isSetCzechLanguage()) {
+                    countryName = country.getCountryCzechNameNoDiacritics();
+                }
+                if (countryName != null && countryName.contains(query)) {
                     filteredCountries.add(country);
                 }
             }
@@ -117,6 +125,16 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
         Collections.sort(result, getComparator());
         return result;
+    }
+
+    private boolean isSetCzechLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(context.getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            if (locales.get(0).getLanguage() == "cs") {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Comparator<? super Country> getComparator() {

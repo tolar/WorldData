@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">COVID-19 ve světě</string>
+
+    <string name="preference_file_key">cz.vaclavtolar.corona_stats.PREFERENCE_FILE_KEY</string>
+
+    <string name="search_hint">Vyhledat zemi...</string>
+    <string name="search_title">Vyhledat zemi</string>
+    <string name="info_title">Info</string>
+    <string name="settings_title">Nastavení</string>
+
+    <string name="confirmed_cases">Potvrzené případy</string>
+    <string name="deaths">Úmrtí</string>
+    <string name="active_cases">Nakažení</string>
+    <string name="recovered">Uzdravení</string>
+    <string name="country">Země</string>
+    <string name="data_source">Zdroj dat</string>
+    <string name="last_update_in_app">Poslední aktualizace dat v mobilní aplikaci</string>
+    <string name="first_column_sorted">První sloupec (seřazeno podle)</string>
+    <string name="second_column">Druhý sloupec</string>
+</resources>

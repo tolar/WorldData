@@ -52,6 +52,12 @@
                 android:text="@string/recovered"
                 android:onClick="onCol1RadioClicked"/>
 
+            <RadioButton
+                android:id="@+id/column1_deaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deaths"
+                android:onClick="onCol1RadioClicked"/>
         </RadioGroup>
 
         <TextView
@@ -87,6 +93,12 @@
                 android:text="@string/recovered"
                 android:onClick="onCol2RadioClicked"/>
 
+            <RadioButton
+                android:id="@+id/column2_deaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deaths"
+                android:onClick="onCol2RadioClicked"/>
         </RadioGroup>
 
     </LinearLayout>

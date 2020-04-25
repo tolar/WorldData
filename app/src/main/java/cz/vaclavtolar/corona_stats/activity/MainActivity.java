@@ -1,9 +1,19 @@
 package cz.vaclavtolar.corona_stats.activity;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -14,13 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
 import com.google.gson.Gson;
@@ -107,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
             case RECOVERED:
                 colTitle  = getString(R.string.recovered);
                 break;
+            case DEATHS:
+                colTitle  = getString(R.string.deaths);
+                break;
         }
         return colTitle ;
     }
@@ -124,6 +130,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         setTableTitles();
+
+        // nacteme data z preferences
+        List<Country> countries = getDataFromPreferences();
+        if (countries != null && !countries.isEmpty()) {
+            countriesAdapter.setCountries(countries);
+            countriesAdapter.notifyDataSetChanged();
+        }
+
         Call<List<Country>> call = CoronaWorldService.getInstance().getAllCountries();
         call.enqueue(new Callback<List<Country>>() {
             @Override
@@ -154,12 +168,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // nacteme data z preferences
-        List<Country> countries = getDataFromPreferences();
-        if (countries != null || countries.isEmpty()) {
-            countriesAdapter.setCountries(countries);
-            countriesAdapter.notifyDataSetChanged();
-        }
     }
 
     private void prepareMetadataData(Country ctr) {

@@ -14,4 +14,7 @@ public interface CoronavirusApi {
     @GET("jhu-edu/latest")
     Call<List<Country>> getAllCountries(@Query("onlyCountries") boolean onlyCountry);
 
+    @GET("jhu-edu/timeseries?iso2=US")
+    Call<List<Country>> getCountry(@Query("iso2") String iso2Code);
+
 }

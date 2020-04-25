@@ -11,14 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.CountryActivity"></activity>
         <activity
-            android:name="cz.vaclavtolar.corona_stats.activity.SettingsActivity"
-            android:launchMode="singleInstance"></activity>
-        <activity
-            android:name="cz.vaclavtolar.corona_stats.activity.InfoActivity"
+            android:name=".activity.SettingsActivity"
             android:launchMode="singleInstance" />
         <activity
-            android:name="cz.vaclavtolar.corona_stats.activity.MainActivity"
+            android:name=".activity.InfoActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".activity.MainActivity"
             android:launchMode="singleInstance">
             <meta-data
                 android:name="android.app.searchable"

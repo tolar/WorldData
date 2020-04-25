@@ -305,6 +305,10 @@ public class CoronaWorldService {
         return coronavirusApi.getAllCountries(true);
     }
 
+    public Call<List<Country>> getCountry(String iso2) {
+        return coronavirusApi.getCountry(iso2);
+    }
+
     public String getCountryCzechName(String iso2) {
         return countryByIso2.get(iso2);
     }

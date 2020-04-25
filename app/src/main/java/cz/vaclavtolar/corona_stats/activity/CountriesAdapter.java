@@ -97,6 +97,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             case CONFIRMED: colVal = country.getConfirmed(); break;
             case ACTIVE: colVal = country.getActive(); break;
             case RECOVERED: colVal = country.getRecovered(); break;
+            case DEATHS: colVal = country.getDeaths(); break;
         }
         return colVal;
     }
@@ -143,6 +144,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             case CONFIRMED: return getConfirmedComparator();
             case ACTIVE: return getActiveComparator();
             case RECOVERED: return getRecoveredComparator();
+            case DEATHS: return getDeathsComparator();
         }
         return getConfirmedComparator();
     }
@@ -182,6 +184,13 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             recoveredComparator = new RecoveredComparator();
         }
         return recoveredComparator;
+    }
+
+    public Comparator<Country> getDeathsComparator() {
+        if (deathsComparator == null) {
+            deathsComparator = new DeathComparator();
+        }
+        return deathsComparator;
     }
 
     class ConfirmedComparator implements Comparator<Country> {
@@ -241,4 +250,22 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
     }
 
+    class DeathComparator implements Comparator<Country> {
+
+        @Override
+        public int compare(Country item1, Country item2) {
+            if (item1 != null && item2 != null) {
+                if (item1.getDeaths() == item2.getDeaths()) {
+                    return 0;
+                }
+                if (item1.getDeaths() < item2.getDeaths()) {
+                    return 1;
+                }
+                if (item1.getDeaths() > item2.getDeaths()) {
+                    return -1;
+                }
+            }
+            return 0;
+        }
+    }
 }

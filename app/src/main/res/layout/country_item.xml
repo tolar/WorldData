@@ -2,19 +2,34 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="2sp"
+    android:layout_marginBottom="2sp"
+    android:layout_marginLeft="2sp"
+    android:layout_marginRight="2sp"
+    app:cardBackgroundColor="@color/colorNoTooWhiteBackground">
     
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
         <TableRow android:padding="2dp">
+
+            <TextView
+                android:id="@+id/order"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="textStart"
+                android:text=""
+                android:textSize="12sp" />
+
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:orientation="vertical"
                 android:layout_gravity="left"
                 >
@@ -39,7 +54,7 @@
                 android:id="@+id/col1"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:layout_gravity="center_vertical"
                 android:textAlignment="textEnd"
                 android:text=""
@@ -49,7 +64,7 @@
                 android:id="@+id/col2"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:layout_gravity="center_vertical"
                 android:textAlignment="textEnd"
                 android:text=""

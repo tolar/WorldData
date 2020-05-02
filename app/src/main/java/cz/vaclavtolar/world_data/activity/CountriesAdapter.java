@@ -1,6 +1,7 @@
 package cz.vaclavtolar.world_data.activity;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -65,11 +66,18 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         CardView itemView = viewHolder.itemView;
         Country country = getFilteredCountries().get(index);
         if (country != null) {
+
+            TextView orderView = itemView.findViewById(R.id.order);
+            orderView.setText((index + 1) + ".");
+
             ImageView flagImageView = itemView.findViewById(R.id.flag);
             if (country.getAlpha2Code() != null) {
                 flagImageView.setImageResource(World.getFlagOf(country.getAlpha2Code()));
             } else {
                 flagImageView.setImageResource(World.getFlagOf(country.getName()));
+            }
+            if (flagImageView.getDrawable() == null) {
+                flagImageView.setImageURI(Uri.parse(country.getFlag()));
             }
             TextView countryTextView = itemView.findViewById(R.id.country);
 
@@ -137,9 +145,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetCzechLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(context.getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            if (locales.get(0).getLanguage() == "cs") {
-                return true;
-            }
+            return locales.get(0).getLanguage() == "cs";
         }
         return false;
     }
@@ -169,11 +175,19 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         this.countries.clear();
         for (int i = 0; i < countries.size(); i++) {
             final Country country =  countries.get(i);
-            if (country.getPopulation() != null && country.getArea() != null) {
+            if (countryHasData(country) && !isAntarctica(country)) {
                 this.countries.add(country);
             }
         }
         notifyDataSetChanged();
+    }
+
+    private boolean countryHasData(Country country) {
+        return country.getPopulation() != null && country.getArea() != null;
+    }
+
+    private boolean isAntarctica(Country country) {
+        return "AQ".equals(country.getAlpha2Code());
     }
 
     public Comparator<Country> getPopulationComparator() {

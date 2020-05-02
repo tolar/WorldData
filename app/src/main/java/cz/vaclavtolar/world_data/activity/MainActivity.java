@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,20 +98,31 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.col2_title)).setText(getColumnTitle(settings.getColumn2()));
     }
 
-    private String getColumnTitle(Settings.Column column) {
-        String colTitle = "";
+    private SpannableStringBuilder getColumnTitle(Settings.Column column) {
+        SpannableStringBuilder colTitle = new SpannableStringBuilder();
         switch (column) {
             case POPULATION:
-                colTitle  = getString(R.string.population);
+                colTitle  = new SpannableStringBuilder(getString(R.string.population));
                 break;
             case AREA:
-                colTitle  = getString(R.string.area);
+                String areaLabel = getString(R.string.area);
+                String areaLabelWithUnits = areaLabel + " (km2)";
+                SpannableStringBuilder csArea = new SpannableStringBuilder(areaLabelWithUnits);
+                csArea.setSpan(new SuperscriptSpan(), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                csArea.setSpan(new RelativeSizeSpan(0.75f), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                colTitle  = csArea;
                 break;
             case DENSITY:
-                colTitle  = getString(R.string.density);
+                String densityLabel  = getString(R.string.density);
+                String densityLabelWithUnits = densityLabel + " (/km2)";
+                SpannableStringBuilder csDensity = new SpannableStringBuilder(densityLabelWithUnits);
+                csDensity.setSpan(new SuperscriptSpan(), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                csDensity.setSpan(new RelativeSizeSpan(0.75f), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                colTitle  = csDensity;
+
                 break;
         }
-        return colTitle ;
+        return colTitle;
     }
 
     private void initSettings() {

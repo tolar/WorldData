@@ -19,9 +19,11 @@
         android:orientation="vertical"
         >
 
+
+
         <TableLayout
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
@@ -35,9 +37,18 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:textAlignment="textStart"
+                    android:text=""
+                    android:textSize="12sp" />
+
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="5"
                     android:text="@string/country"
                     android:layout_gravity="center_vertical"
                     android:textAlignment="textStart"
@@ -48,7 +59,7 @@
                     android:id="@+id/col1_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:text=""
                     android:layout_gravity="center_vertical"
                     android:textAlignment="textEnd"
@@ -58,7 +69,7 @@
                     android:id="@+id/col2_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:text=""
                     android:layout_gravity="center_vertical"
                     android:textAlignment="textEnd"
@@ -72,8 +83,8 @@
             android:id="@+id/countries"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
+            android:paddingStart="10sp"
+            android:paddingEnd="10sp"
             android:scrollbars="vertical" />
 
     </LinearLayout>

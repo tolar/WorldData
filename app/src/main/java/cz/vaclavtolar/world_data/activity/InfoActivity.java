@@ -1,20 +1,20 @@
-package cz.vaclavtolar.corona_stats.activity;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package cz.vaclavtolar.world_data.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.gson.Gson;
 
 import java.util.Date;
 
-import cz.vaclavtolar.corona_stats.R;
+import cz.vaclavtolar.world_data.R;
 
-import static cz.vaclavtolar.corona_stats.activity.MainActivity.DATA_UPDATED_KEY;
+import static cz.vaclavtolar.world_data.activity.MainActivity.DATA_UPDATED_KEY;
 
 public class InfoActivity extends AppCompatActivity {
 

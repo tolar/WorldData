@@ -1,9 +1,9 @@
-package cz.vaclavtolar.corona_stats.dto;
+package cz.vaclavtolar.world_data.dto;
 
 public class Settings {
 
-    private Column column1 = Column.CONFIRMED;
-    private Column column2 = Column.DEATHS;
+    private Column column1 = Column.POPULATION;
+    private Column column2 = Column.AREA;
 
     public Column getColumn1() {
         return column1;
@@ -22,9 +22,8 @@ public class Settings {
     }
 
     public enum Column {
-        CONFIRMED,
-        ACTIVE,
-        RECOVERED,
-        DEATHS
+        POPULATION,
+        AREA,
+        DENSITY
     }
 }

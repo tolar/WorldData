@@ -1,12 +1,12 @@
-package cz.vaclavtolar.corona_stats.service;
+package cz.vaclavtolar.world_data.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
-import cz.vaclavtolar.corona_stats.R;
-import cz.vaclavtolar.corona_stats.dto.Settings;
+import cz.vaclavtolar.world_data.R;
+import cz.vaclavtolar.world_data.dto.Settings;
 
 import static android.content.Context.MODE_PRIVATE;
 

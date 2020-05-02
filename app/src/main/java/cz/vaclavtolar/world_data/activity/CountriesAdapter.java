@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_stats.activity;
+package cz.vaclavtolar.world_data.activity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,10 +21,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import cz.vaclavtolar.corona_stats.R;
-import cz.vaclavtolar.corona_stats.dto.Country;
-import cz.vaclavtolar.corona_stats.dto.Settings;
-import cz.vaclavtolar.corona_stats.service.PreferencesUtil;
+import cz.vaclavtolar.world_data.R;
+import cz.vaclavtolar.world_data.dto.Country;
+import cz.vaclavtolar.world_data.dto.Settings;
+import cz.vaclavtolar.world_data.service.PreferencesUtil;
 
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {
 
@@ -40,10 +40,9 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
     private List<Country> countries = new ArrayList<>();
     private Context context;
-    private Comparator<Country> confirmedComparator;
-    private Comparator<Country> activeComparator;
-    private Comparator<Country> recoveredComparator;
-    private Comparator<Country> deathsComparator;
+    private Comparator<Country> populationComparator;
+    private Comparator<Country> areaComparator;
+    private Comparator<Country> densityComparator;
 
     public CountriesAdapter(Context context) {
         this.context = context;
@@ -67,37 +66,44 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         Country country = getFilteredCountries().get(index);
         if (country != null) {
             ImageView flagImageView = itemView.findViewById(R.id.flag);
-            if (country.getCountryCode() != null) {
-                flagImageView.setImageResource(World.getFlagOf(country.getCountryCode().getIso2()));
+            if (country.getAlpha2Code() != null) {
+                flagImageView.setImageResource(World.getFlagOf(country.getAlpha2Code()));
             } else {
-                flagImageView.setImageResource(World.getFlagOf(country.getCountryRegion()));
+                flagImageView.setImageResource(World.getFlagOf(country.getName()));
             }
             TextView countryTextView = itemView.findViewById(R.id.country);
 
             if (isSetCzechLanguage() && country.getCountryCzechName() != null) {
                 countryTextView.setText(country.getCountryCzechName());
             } else {
-                countryTextView.setText(country.getCountryRegion());
+                countryTextView.setText(country.getName());
             }
 
             Settings settings = PreferencesUtil.getSettingsFromPreferences(context);
-            float col1Val = getColumnValue(settings.getColumn1(), country);
-            float col2Val = getColumnValue(settings.getColumn2(), country);
+            Double col1Val = getColumnValue(settings.getColumn1(), country);
+            Double col2Val = getColumnValue(settings.getColumn2(), country);
 
             TextView confirmedTextView = itemView.findViewById(R.id.col1);
-            confirmedTextView.setText(formatter.format((Math.round(col1Val))));
+            if (col1Val != null) {
+                confirmedTextView.setText(formatter.format((Math.round(col1Val))));
+            } else {
+                confirmedTextView.setText("-");
+            }
             TextView deathsTextView = itemView.findViewById(R.id.col2);
-            deathsTextView.setText(String.valueOf(formatter.format(Math.round(col2Val))));
+            if (col2Val != null) {
+                deathsTextView.setText(String.valueOf(formatter.format(Math.round(col2Val))));
+            } else {
+                deathsTextView.setText("-");
+            }
         }
     }
 
-    private float getColumnValue(Settings.Column column, Country country) {
-        float colVal = -1;
+    private Double getColumnValue(Settings.Column column, Country country) {
+        Double colVal = null;
         switch (column) {
-            case CONFIRMED: colVal = country.getConfirmed(); break;
-            case ACTIVE: colVal = country.getActive(); break;
-            case RECOVERED: colVal = country.getRecovered(); break;
-            case DEATHS: colVal = country.getDeaths(); break;
+            case POPULATION: colVal = country.getPopulation().doubleValue(); break;
+            case AREA: colVal = country.getArea(); break;
+            case DENSITY: colVal = country.getDensity(); break;
         }
         return colVal;
     }
@@ -114,7 +120,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             for (int i = 0; i < countries.size(); i++) {
                 Country country = countries.get(i);
 
-                String countryName = country.getCountryRegion().toLowerCase();
+                String countryName = country.getName().toLowerCase();
                 if (isSetCzechLanguage()) {
                     countryName = country.getCountryCzechNameNoDiacritics();
                 }
@@ -141,12 +147,11 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private Comparator<? super Country> getComparator() {
         Settings settings = PreferencesUtil.getSettingsFromPreferences(context);
         switch (settings.getColumn1()) {
-            case CONFIRMED: return getConfirmedComparator();
-            case ACTIVE: return getActiveComparator();
-            case RECOVERED: return getRecoveredComparator();
-            case DEATHS: return getDeathsComparator();
+            case POPULATION: return getPopulationComparator();
+            case AREA: return getAreaComparator();
+            case DENSITY: return getDensityComparator();
         }
-        return getConfirmedComparator();
+        return getPopulationComparator();
     }
 
 
@@ -161,50 +166,49 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     }
 
     public void setCountries(List<Country> countries) {
-        this.countries = countries;
+        this.countries.clear();
+        for (int i = 0; i < countries.size(); i++) {
+            final Country country =  countries.get(i);
+            if (country.getPopulation() != null && country.getArea() != null) {
+                this.countries.add(country);
+            }
+        }
         notifyDataSetChanged();
     }
 
-    public Comparator<Country> getConfirmedComparator() {
-        if (confirmedComparator == null) {
-            confirmedComparator = new ConfirmedComparator();
+    public Comparator<Country> getPopulationComparator() {
+        if (populationComparator == null) {
+            populationComparator = new PopulationCompator();
         }
-        return confirmedComparator;
+        return populationComparator;
     }
 
-    public Comparator<Country> getActiveComparator() {
-        if (activeComparator == null) {
-            activeComparator = new ActiveComparator();
+    public Comparator<Country> getAreaComparator() {
+        if (areaComparator == null) {
+            areaComparator = new AreaComparator();
         }
-        return activeComparator;
+        return areaComparator;
     }
 
-    public Comparator<Country> getRecoveredComparator() {
-        if (recoveredComparator == null) {
-            recoveredComparator = new RecoveredComparator();
+    public Comparator<Country> getDensityComparator() {
+        if (densityComparator == null) {
+            densityComparator = new DensityComparator();
         }
-        return recoveredComparator;
+        return densityComparator;
     }
 
-    public Comparator<Country> getDeathsComparator() {
-        if (deathsComparator == null) {
-            deathsComparator = new DeathComparator();
-        }
-        return deathsComparator;
-    }
-
-    class ConfirmedComparator implements Comparator<Country> {
+    class PopulationCompator implements Comparator<Country> {
 
         @Override
         public int compare(Country item1, Country item2) {
             if (item1 != null && item2 != null) {
-                if (item1.getConfirmed() == item2.getConfirmed()) {
+                if (item1.getPopulation() == item2.getPopulation()) {
                     return 0;
                 }
-                if (item1.getConfirmed() < item2.getConfirmed()) {
+                if (item1.getPopulation() < item2.getPopulation()) {
                     return 1;
                 }
-                if (item1.getConfirmed() > item2.getConfirmed()) {
+                if (item1.getPopulation() > item2.getPopulation()) {
                     return -1;
                 }
             }
@@ -212,18 +216,18 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
     }
 
-    class ActiveComparator implements Comparator<Country> {
+    class AreaComparator implements Comparator<Country> {
 
         @Override
         public int compare(Country item1, Country item2) {
             if (item1 != null && item2 != null) {
-                if (item1.getActive() == item2.getActive()) {
+                if (item1.getArea() == item2.getArea()) {
                     return 0;
                 }
-                if (item1.getActive() < item2.getActive()) {
+                if (item1.getArea() < item2.getArea()) {
                     return 1;
                 }
-                if (item1.getActive() > item2.getActive()) {
+                if (item1.getArea() > item2.getArea()) {
                     return -1;
                 }
             }
@@ -231,18 +235,18 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
     }
 
-    class RecoveredComparator implements Comparator<Country> {
+    class DensityComparator implements Comparator<Country> {
 
         @Override
         public int compare(Country item1, Country item2) {
             if (item1 != null && item2 != null) {
-                if (item1.getRecovered() == item2.getRecovered()) {
+                if (item1.getDensity() == item2.getDensity()) {
                     return 0;
                 }
-                if (item1.getRecovered() < item2.getRecovered()) {
+                if (item1.getDensity() < item2.getDensity()) {
                     return 1;
                 }
-                if (item1.getRecovered() > item2.getRecovered()) {
+                if (item1.getDensity() > item2.getDensity()) {
                     return -1;
                 }
             }
@@ -250,22 +254,4 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
     }
 
-    class DeathComparator implements Comparator<Country> {
-
-        @Override
-        public int compare(Country item1, Country item2) {
-            if (item1 != null && item2 != null) {
-                if (item1.getDeaths() == item2.getDeaths()) {
-                    return 0;
-                }
-                if (item1.getDeaths() < item2.getDeaths()) {
-                    return 1;
-                }
-                if (item1.getDeaths() > item2.getDeaths()) {
-                    return -1;
-                }
-            }
-            return 0;
-        }
-    }
 }

@@ -1,19 +1,9 @@
-package cz.vaclavtolar.corona_stats.activity;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package cz.vaclavtolar.world_data.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -25,6 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blongho.country_data.World;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,15 +29,14 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import cz.vaclavtolar.corona_stats.R;
-import cz.vaclavtolar.corona_stats.dto.Country;
-import cz.vaclavtolar.corona_stats.dto.Settings;
-import cz.vaclavtolar.corona_stats.service.CoronaWorldService;
-import cz.vaclavtolar.corona_stats.service.PreferencesUtil;
+import cz.vaclavtolar.world_data.R;
+import cz.vaclavtolar.world_data.dto.Country;
+import cz.vaclavtolar.world_data.dto.Settings;
+import cz.vaclavtolar.world_data.service.CountriesService;
+import cz.vaclavtolar.world_data.service.PreferencesUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,17 +97,14 @@ public class MainActivity extends AppCompatActivity {
     private String getColumnTitle(Settings.Column column) {
         String colTitle = "";
         switch (column) {
-            case CONFIRMED:
-                colTitle  = getString(R.string.confirmed_cases);
+            case POPULATION:
+                colTitle  = getString(R.string.population);
                 break;
-            case ACTIVE:
-                colTitle  = getString(R.string.active_cases);
+            case AREA:
+                colTitle  = getString(R.string.area);
                 break;
-            case RECOVERED:
-                colTitle  = getString(R.string.recovered);
-                break;
-            case DEATHS:
-                colTitle  = getString(R.string.deaths);
+            case DENSITY:
+                colTitle  = getString(R.string.density);
                 break;
         }
         return colTitle ;
@@ -138,17 +131,15 @@ public class MainActivity extends AppCompatActivity {
             countriesAdapter.notifyDataSetChanged();
         }
 
-        Call<List<Country>> call = CoronaWorldService.getInstance().getAllCountries();
+        Call<List<Country>> call = CountriesService.getInstance().getAllCountries();
         call.enqueue(new Callback<List<Country>>() {
             @Override
             public void onResponse(Call<List<Country>> call, Response<List<Country>> response) {
                 if (response.isSuccessful()) {
                     List<Country> countries = response.body();
                     for (Country ctr : countries) {
-                        if (ctr.getCountryCode() != null) {
-                            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
-                        } else {
-                            fixCountryData(ctr);
+                        if (ctr.getAlpha2Code() != null) {
+                            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getAlpha2Code()));
                         }
                         prepareMetadataData(ctr);
                     }
@@ -174,7 +165,9 @@ public class MainActivity extends AppCompatActivity {
         if (ctr.getCountryCzechName() != null) {
             ctr.setCountryCzechNameNoDiacritics(removeDiacriticalMarks(ctr.getCountryCzechName().toLowerCase()));
         }
-        ctr.setActive(ctr.getConfirmed() - ctr.getRecovered());
+        if (ctr.getPopulation() != null && ctr.getArea() != null) {
+            ctr.setDensity(ctr.getPopulation() / ctr.getArea());
+        }
     }
 
     public static String removeDiacriticalMarks(String string) {
@@ -182,75 +175,78 @@ public class MainActivity extends AppCompatActivity {
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
+    /*
     private void fixCountryData(Country ctr) {
         if (CZECHIA.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("CZ");
             countryCode.setIso3("CZE");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (HOLY_SEE.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("VA");
             countryCode.setIso3("VAT");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (CABO_VERDE.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("CV");
             countryCode.setIso3("CPV");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (CONGO_BRAZZAVILLE.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("CG");
             countryCode.setIso3("COG");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (CONGO_KINSHASA.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("CD");
             countryCode.setIso3("COD");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (ESWATINI.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("SZ");
             countryCode.setIso3("SWZ");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (GAMBIA.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("GM");
             countryCode.setIso3("GMB");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (ctr.getCountryRegion() != null && ctr.getCountryRegion().startsWith(TAIWAN)) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("TW");
             countryCode.setIso3("TWN");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (KOSOVO.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("XK");
             countryCode.setIso3("XXK");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (BURMA.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("MM");
             countryCode.setIso3("MMR");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         } else if (WEST_BANK_AND_GAZA.equals(ctr.getCountryRegion())) {
             Country.CountryCode countryCode = new Country.CountryCode();
             countryCode.setIso2("PS");
             countryCode.setIso3("PSE");
             ctr.setCountryCode(countryCode);
-            ctr.setCountryCzechName(CoronaWorldService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
+            ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getCountryCode().getIso2()));
         }
     }
+
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -366,6 +362,9 @@ public class MainActivity extends AppCompatActivity {
         Type listOfCountryObjects = new TypeToken<ArrayList<Country>>() {
         }.getType();
         List<Country> countries = gson.fromJson(json, listOfCountryObjects);
+        if (countries == null) {
+            return new ArrayList<>();
+        }
         return countries;
     }
 

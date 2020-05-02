@@ -1,4 +1,4 @@
-package cz.vaclavtolar.corona_stats.service;
+package cz.vaclavtolar.world_data.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cz.vaclavtolar.corona_stats.dto.Country;
+import cz.vaclavtolar.world_data.dto.Country;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import static cz.vaclavtolar.corona_stats.service.CoronavirusApi.BASE_URL;
+import static cz.vaclavtolar.world_data.service.CountriesApi.BASE_URL;
 
-public class CoronaWorldService {
+public class CountriesService {
 
     final static Map<String, String> countryByIso2 = new HashMap<>();
 
@@ -272,17 +272,17 @@ public class CoronaWorldService {
     }
 
 
-    private static CoronaWorldService instance;
+    private static CountriesService instance;
 
-    private CoronavirusApi coronavirusApi;
+    private CountriesApi countriesApi;
 
-    private CoronaWorldService() {
+    private CountriesService() {
         initRestApiClient();
     }
 
-    public static CoronaWorldService getInstance() {
+    public static CountriesService getInstance() {
         if (instance == null) {
-            instance = new CoronaWorldService();
+            instance = new CountriesService();
         }
         return instance;
     }
@@ -298,15 +298,11 @@ public class CoronaWorldService {
                 .addConverterFactory(converterFactory)
                 .client(httpClient)
                 .build();
-        coronavirusApi = retrofit.create(CoronavirusApi.class);
+        countriesApi = retrofit.create(CountriesApi.class);
     }
 
     public Call<List<Country>> getAllCountries() {
-        return coronavirusApi.getAllCountries(true);
-    }
-
-    public Call<List<Country>> getCountry(String iso2) {
-        return coronavirusApi.getCountry(iso2);
+        return countriesApi.getAllCountries();
     }
 
     public String getCountryCzechName(String iso2) {

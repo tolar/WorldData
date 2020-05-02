@@ -32,7 +32,7 @@
                     android:textAlignment="viewStart"
 
                     android:text="Country"
-                    android:textSize="18sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:textAlignment="textEnd"
                 android:text=""
-                android:textSize="24sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/col2"
@@ -53,7 +53,7 @@
                 android:layout_gravity="center_vertical"
                 android:textAlignment="textEnd"
                 android:text=""
-                android:textSize="24sp" />
+                android:textSize="14sp" />
 
 
 

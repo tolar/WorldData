@@ -1,17 +1,16 @@
 <resources>
-    <string name="preference_file_key">cz.vaclavtolar.corona_stats.PREFERENCE_FILE_KEY</string>
+    <string name="preference_file_key">cz.vaclavtolar.world_data.PREFERENCE_FILE_KEY</string>
 
-    <string name="app_name">COVID-19 global overview</string>
+    <string name="app_name">World Population</string>
 
     <string name="search_hint">Search country...</string>
     <string name="search_title">Search country</string>
     <string name="info_title">Info</string>
     <string name="settings_title">Settings</string>
 
-    <string name="confirmed_cases">Confirmed cases</string>
-    <string name="deaths">Deaths</string>
-    <string name="active_cases">Active cases</string>
-    <string name="recovered">Recovered</string>
+    <string name="population">Population</string>
+    <string name="area">Area</string>
+    <string name="density">Density</string>
     <string name="country">Country</string>
     <string name="data_source">Data source</string>
     <string name="last_update_in_app">Last update of data in mobile app</string>

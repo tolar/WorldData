@@ -28,7 +28,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="https://restcountries.eu/rest/" />
+            android:layout_marginBottom="6sp"
+            android:text="https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6sp"
+            android:text="https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_area" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6sp"
+            android:text="https://github.com/mledoze/countries" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

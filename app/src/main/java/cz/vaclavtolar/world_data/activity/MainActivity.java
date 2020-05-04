@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        countriesAdapter = new CountriesAdapter(getApplicationContext());
+        countriesAdapter = new CountriesAdapter(this);
         RecyclerView itemsRecyler = findViewById(R.id.countries);
         itemsRecyler.setAdapter(countriesAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setPadding(15, 15, 15, 15);
         textView.setTextColor(getResources().getColor(R.color.colorErrorText));
-        textView.setText("Aktualizace dat nebyla úspěšná.\n Zkontrolujte připojení k internetu.");
+        textView.setText(R.string.connection_error_message);
         ((LinearLayout) findViewById(R.id.mainContainer)).addView(textView, 0);
     }
 

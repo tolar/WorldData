@@ -1,2 +1,2 @@
-rootProject.name='World Data'
+rootProject.name='WorldData'
 include ':app'

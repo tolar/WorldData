@@ -6,6 +6,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Country {
 
+    private int order;
+
     private String alpha2Code;
     private String alpha3Code;
     
@@ -272,5 +274,13 @@ public class Country {
 
     public String getCountryCzechNameNoDiacritics() {
         return countryCzechNameNoDiacritics;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

@@ -16,4 +16,6 @@
     <string name="last_update_in_app">Poslední aktualizace dat v mobilní aplikaci</string>
     <string name="first_column_sorted">První sloupec (seřazeno podle)</string>
     <string name="second_column">Druhý sloupec</string>
+
+    <string name="connection_error_message">Aktualizace dat nebyla úspěšná.\n Zkontrolujte připojení k internetu.</string>
 </resources>

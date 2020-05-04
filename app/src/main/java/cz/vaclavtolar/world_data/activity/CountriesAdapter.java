@@ -1,7 +1,6 @@
 package cz.vaclavtolar.world_data.activity;
 
-import android.content.Context;
-import android.net.Uri;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import androidx.core.os.ConfigurationCompat;
 import androidx.core.os.LocaleListCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ahmadrosid.svgloader.SvgLoader;
 import com.blongho.country_data.World;
 
 import java.text.DecimalFormat;
@@ -29,24 +29,27 @@ import cz.vaclavtolar.world_data.service.PreferencesUtil;
 
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {
 
-    static DecimalFormat formatter;
+    public static final int ROUND_LIMIT = 10;
+    static DecimalFormat formatterNoDecimal;
+    static DecimalFormat formatterWithDecimal;
 
     static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
-        formatter = new DecimalFormat("###,###,###", symbols);
+        formatterNoDecimal = new DecimalFormat("###,###,###", symbols);
+        formatterWithDecimal = new DecimalFormat("###,###,###.##", symbols);
     }
 
     private String query;
 
     private List<Country> countries = new ArrayList<>();
-    private Context context;
+    private final Activity activity;
     private Comparator<Country> populationComparator;
     private Comparator<Country> areaComparator;
     private Comparator<Country> densityComparator;
 
-    public CountriesAdapter(Context context) {
-        this.context = context;
+    public CountriesAdapter(Activity activity) {
+        this.activity = activity;
         this.query = null;
     }
 
@@ -57,7 +60,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView cardView = (CardView) LayoutInflater.from(context).inflate(R.layout.country_item, parent, false);
+        CardView cardView = (CardView) LayoutInflater.from(activity.getApplicationContext()).inflate(R.layout.country_item, parent, false);
         return new CountriesAdapter.ViewHolder(cardView);
     }
 
@@ -68,7 +71,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         if (country != null) {
 
             TextView orderView = itemView.findViewById(R.id.order);
-            orderView.setText((index + 1) + ".");
+            orderView.setText((country.getOrder()) + ".");
 
             ImageView flagImageView = itemView.findViewById(R.id.flag);
             if (country.getAlpha2Code() != null) {
@@ -76,8 +79,9 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             } else {
                 flagImageView.setImageResource(World.getFlagOf(country.getName()));
             }
-            if (flagImageView.getDrawable() == null) {
-                flagImageView.setImageURI(Uri.parse(country.getFlag()));
+            if (flagImageView.getDrawable() == null && country.getFlag() != null) {
+                // no flag found, try set flag as SVG image
+                SvgLoader.pluck().with(activity).load(country.getFlag(), flagImageView);
             }
             TextView countryTextView = itemView.findViewById(R.id.country);
 
@@ -87,21 +91,29 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 countryTextView.setText(country.getName());
             }
 
-            Settings settings = PreferencesUtil.getSettingsFromPreferences(context);
+            Settings settings = PreferencesUtil.getSettingsFromPreferences(activity.getApplicationContext());
             Double col1Val = getColumnValue(settings.getColumn1(), country);
             Double col2Val = getColumnValue(settings.getColumn2(), country);
 
-            TextView confirmedTextView = itemView.findViewById(R.id.col1);
+            TextView col1TextView = itemView.findViewById(R.id.col1);
             if (col1Val != null) {
-                confirmedTextView.setText(formatter.format((Math.round(col1Val))));
+                if (col1Val < ROUND_LIMIT) {
+                    col1TextView.setText(String.valueOf(formatterWithDecimal.format(col1Val)));
+                } else {
+                    col1TextView.setText(String.valueOf(formatterNoDecimal.format(Math.round(col1Val))));
+                }
             } else {
-                confirmedTextView.setText("-");
+                col1TextView.setText("-");
             }
-            TextView deathsTextView = itemView.findViewById(R.id.col2);
+            TextView col2TextView = itemView.findViewById(R.id.col2);
             if (col2Val != null) {
-                deathsTextView.setText(String.valueOf(formatter.format(Math.round(col2Val))));
+                if (col2Val < ROUND_LIMIT) {
+                    col2TextView.setText(String.valueOf(formatterWithDecimal.format(col2Val)));
+                } else {
+                    col2TextView.setText(String.valueOf(formatterNoDecimal.format(Math.round(col2Val))));
+                }
             } else {
-                deathsTextView.setText("-");
+                col2TextView.setText("-");
             }
         }
     }
@@ -122,7 +134,11 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     }
 
     public List<Country> getFilteredCountries() {
+
         List<Country> result = countries;
+        Collections.sort(result, getComparator());
+        populateOrderForCountries(this.countries);
+
         if (query != null) {
             List<Country> filteredCountries = new ArrayList<>();
             for (int i = 0; i < countries.size(); i++) {
@@ -138,12 +154,18 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             }
             result = filteredCountries;
         }
-        Collections.sort(result, getComparator());
         return result;
     }
 
+    private void populateOrderForCountries(List<Country> countries) {
+        int order = 1;
+        for (Country country : countries) {
+            country.setOrder(order++);
+        }
+    }
+
     private boolean isSetCzechLanguage() {
-        LocaleListCompat locales = ConfigurationCompat.getLocales(context.getResources().getConfiguration());
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
             return locales.get(0).getLanguage() == "cs";
         }
@@ -151,7 +173,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     }
 
     private Comparator<? super Country> getComparator() {
-        Settings settings = PreferencesUtil.getSettingsFromPreferences(context);
+        Settings settings = PreferencesUtil.getSettingsFromPreferences(activity.getApplicationContext());
         switch (settings.getColumn1()) {
             case POPULATION: return getPopulationComparator();
             case AREA: return getAreaComparator();

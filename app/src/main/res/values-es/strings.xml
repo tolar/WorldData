@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Población de paises</string>
+
+    <string name="preference_file_key">cz.vaclavtolar.world_data.PREFERENCE_FILE_KEY</string>
+
+    <string name="search_hint">Buscar país ...</string>
+    <string name="search_title">Buscar país</string>
+    <string name="info_title">Informacion</string>
+    <string name="settings_title">Configuraciones</string>
+
+    <string name="population">Población</string>
+    <string name="area">Zona</string>
+    <string name="density">Densidad</string>
+    <string name="country">País</string>
+    <string name="data_source">Fuente de datos</string>
+    <string name="last_update_in_app">Última actualización de datos en la aplicación móvil</string>
+    <string name="first_column_sorted">Primera columna (ordenada por)</string>
+    <string name="second_column">Segunda columna</string>
+
+    <string name="connection_error_message">Actualización fallida.\n Verifica la conexión a internet.</string>
+</resources>

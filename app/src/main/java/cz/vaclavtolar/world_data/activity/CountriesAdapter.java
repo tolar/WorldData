@@ -87,6 +87,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
             if (isSetCzechLanguage() && country.getCountryCzechName() != null) {
                 countryTextView.setText(country.getCountryCzechName());
+            } else if (isSetFrenchLanguage()) {
+                countryTextView.setText(country.getTranslations().getFr());
+            } else if (isSetSpanishLanguage()) {
+                countryTextView.setText(country.getTranslations().getEs());
+            } else if (isSetPortugalLanguage()) {
+                countryTextView.setText(country.getTranslations().getPt());
             } else {
                 countryTextView.setText(country.getName());
             }
@@ -171,6 +177,31 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
         return false;
     }
+
+    private boolean isSetFrenchLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "fr";
+        }
+        return false;
+    }
+
+    private boolean isSetSpanishLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "es";
+        }
+        return false;
+    }
+
+    private boolean isSetPortugalLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "pt";
+        }
+        return false;
+    }
+
 
     private Comparator<? super Country> getComparator() {
         Settings settings = PreferencesUtil.getSettingsFromPreferences(activity.getApplicationContext());

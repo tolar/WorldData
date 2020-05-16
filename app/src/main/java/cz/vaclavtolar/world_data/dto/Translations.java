@@ -5,16 +5,16 @@ package cz.vaclavtolar.world_data.dto;
 @SuppressWarnings("unused")
 public class Translations {
 
-    private String br;
-    private String de;
-    private String es;
-    private String fa;
-    private String fr;
-    private String hr;
-    private String it;
-    private String ja;
-    private String nl;
-    private String pt;
+    private String br; // bretonstina
+    private String de; // nemcina
+    private String es; // spanelstina
+    private String fa; // perstina
+    private String fr; // francouzstina
+    private String hr; // chorvatstina
+    private String it; // italstina
+    private String ja; // japonstina
+    private String nl; // holandstina
+    private String pt; // portugalstina
 
     public String getBr() {
         return br;

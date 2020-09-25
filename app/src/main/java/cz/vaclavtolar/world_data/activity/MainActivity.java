@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     for (Country ctr : countries) {
                         if (ctr.getAlpha2Code() != null) {
                             ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getAlpha2Code()));
+                            ctr.setCountryChineseName(CountriesService.getInstance().getCountryChineseName(ctr.getAlpha2Code()));
                         }
                         prepareMetadataData(ctr);
                     }

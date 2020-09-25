@@ -309,6 +309,10 @@ public class CountriesService {
         return countryNamesByIso2.get(iso2).getCzechName();
     }
 
+    public String getCountryChineseName(String iso2) {
+        return countryNamesByIso2.get(iso2).getChineseName();
+    }
+
     public static class CountryNames {
         private String czechName;
         private String chineseName;

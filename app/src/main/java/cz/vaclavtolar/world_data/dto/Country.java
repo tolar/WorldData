@@ -60,6 +60,8 @@ public class Country {
     private String countryCzechName;
     private String countryCzechNameNoDiacritics;
 
+    private String countryChineseName;
+
     public String getAlpha2Code() {
         return alpha2Code;
     }
@@ -266,6 +268,14 @@ public class Country {
 
     public void setCountryCzechName(String countryCzechName) {
         this.countryCzechName = countryCzechName;
+    }
+
+    public String getCountryChineseName() {
+        return countryChineseName;
+    }
+
+    public void setCountryChineseName(String countryChineseName) {
+        this.countryChineseName = countryChineseName;
     }
 
     public void setCountryCzechNameNoDiacritics(String countryCzechNameNoDiacritics) {

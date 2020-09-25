@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Countries population</string>
+    <string name="app_name">国家人口</string>
+    <string name="search_title">搜索国家</string>
+    <string name="search_hint">搜索国家...</string>
+    <string name="info_title">信息</string>
+    <string name="settings_title">设置</string>
+    <string name="population">人口</string>
+    <string name="area">" 区"</string>
+    <string name="density">人口密度</string>
+    <string name="country">国家</string>
+    <string name="data_source">数据源</string>
+    <string name="last_update_in_app">" 移动应用中数据的最新更新"</string>
+    <string name="first_column_sorted">第一栏（排序）</string>
+    <string name="second_column">第二栏</string>
+    <string name="connection_error_message">" 更新失败。  检查互联网连接。"</string>
+    <string name="preference_file_key">cz.vaclavtolar.world_data.PREFERENCE_FILE_KEY</string>
 </resources>

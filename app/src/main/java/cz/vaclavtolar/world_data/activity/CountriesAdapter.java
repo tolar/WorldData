@@ -93,6 +93,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 countryTextView.setText(country.getTranslations().getEs());
             } else if (isSetPortugalLanguage()) {
                 countryTextView.setText(country.getTranslations().getPt());
+            } else if (isSetChineseLanguage() && country.getCountryChineseName() != null) {
+                countryTextView.setText(country.getCountryChineseName());
             } else {
                 countryTextView.setText(country.getName());
             }
@@ -123,6 +125,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             }
         }
     }
+
+
 
     private Double getColumnValue(Settings.Column column, Country country) {
         Double colVal = null;
@@ -198,6 +202,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
             return locales.get(0).getLanguage() == "pt";
+        }
+        return false;
+    }
+
+    private boolean isSetChineseLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "zh";
         }
         return false;
     }

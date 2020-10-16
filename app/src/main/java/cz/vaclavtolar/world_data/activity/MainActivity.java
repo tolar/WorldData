@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
+import com.google.android.material.slider.RangeSlider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,6 +39,7 @@ import java.util.List;
 
 import cz.vaclavtolar.world_data.R;
 import cz.vaclavtolar.world_data.dto.Country;
+import cz.vaclavtolar.world_data.dto.IntervalLimits;
 import cz.vaclavtolar.world_data.dto.Settings;
 import cz.vaclavtolar.world_data.service.CountriesService;
 import cz.vaclavtolar.world_data.service.PreferencesUtil;
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEST_BANK_AND_GAZA = "West Bank and Gaza";
 
     private CountriesAdapter countriesAdapter;
+
+    private final IntervalLimits intervalLimits = new IntervalLimits();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,24 +149,31 @@ public class MainActivity extends AppCompatActivity {
             countriesAdapter.setCountries(countries);
             countriesAdapter.notifyDataSetChanged();
         }
+        for (Country ctr: countries) {
+            updateIntervalLimits(intervalLimits, ctr);
+        }
+        updateSliders();
 
         Call<List<Country>> call = CountriesService.getInstance().getAllCountries();
         call.enqueue(new Callback<List<Country>>() {
             @Override
             public void onResponse(Call<List<Country>> call, Response<List<Country>> response) {
                 if (response.isSuccessful()) {
+
                     List<Country> countries = response.body();
                     for (Country ctr : countries) {
                         if (ctr.getAlpha2Code() != null) {
                             ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getAlpha2Code()));
                             ctr.setCountryChineseName(CountriesService.getInstance().getCountryChineseName(ctr.getAlpha2Code()));
                         }
+                        updateIntervalLimits(intervalLimits, ctr);
                         prepareMetadataData(ctr);
                     }
                     removeErrorText();
                     storeDataToPreferences(countries);
                     countriesAdapter.setCountries(countries);
                     countriesAdapter.notifyDataSetChanged();
+                    updateSliders();
                 }
             }
 
@@ -170,10 +181,53 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<Country>> call, Throwable t) {
                 addErrorTextView();
                 List<Country> countries = getDataFromPreferences();
+                for (Country ctr: countries) {
+                    updateIntervalLimits(intervalLimits, ctr);
+                }
                 countriesAdapter.setCountries(countries);
                 countriesAdapter.notifyDataSetChanged();
+                updateSliders();
             }
         });
+
+    }
+
+    private void updateSliders() {
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues((float)intervalLimits.getPopulationMin(), (float)intervalLimits.getPopulationMax());
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom((float)intervalLimits.getPopulationMin());
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueTo((float)intervalLimits.getPopulationMax());
+        ((RangeSlider)findViewById(R.id.rangeArea)).setValues((float)intervalLimits.getAreaMin(), (float)intervalLimits.getAreaMax());
+        ((RangeSlider)findViewById(R.id.rangeArea)).setValueFrom((float)intervalLimits.getAreaMin());
+        ((RangeSlider)findViewById(R.id.rangeArea)).setValueTo((float)intervalLimits.getAreaMax());
+        ((RangeSlider)findViewById(R.id.rangeDensity)).setValues((float)intervalLimits.getDensityMin(), (float)intervalLimits.getDensityMax());
+        ((RangeSlider)findViewById(R.id.rangeDensity)).setValueFrom((float)intervalLimits.getDensityMin());
+        ((RangeSlider)findViewById(R.id.rangeDensity)).setValueTo((float)intervalLimits.getDensityMax());
+
+    }
+
+    private void updateIntervalLimits(IntervalLimits intervalLimits, Country ctr) {
+        if (ctr.getPopulation() != null) {
+            if (ctr.getPopulation() < intervalLimits.getPopulationMin()) {
+                intervalLimits.setPopulationMin(ctr.getPopulation());
+            }
+            if (ctr.getPopulation() > intervalLimits.getPopulationMax()) {
+                intervalLimits.setPopulationMax(ctr.getPopulation());
+            }
+        }
+        if (ctr.getArea() != null) {
+            if (ctr.getArea() < intervalLimits.getAreaMin()) {
+                intervalLimits.setAreaMin((long)Math.floor(ctr.getArea()));
+            }
+            if (ctr.getArea() > intervalLimits.getAreaMax()) {
+                intervalLimits.setAreaMax((long)Math.ceil(ctr.getArea()));
+            }
+        }
+        if (ctr.getDensity() < intervalLimits.getDensityMin()) {
+            intervalLimits.setDensityMin((long)Math.floor(ctr.getDensity()));
+        }
+        if (ctr.getDensity() > intervalLimits.getDensityMax()) {
+            intervalLimits.setDensityMax((long)Math.ceil(ctr.getDensity()));
+        }
 
     }
 
@@ -323,6 +377,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 startSettingsActivity();
                 return true;
+            case R.id.action_filter:
+                showFilterSliders();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -336,6 +393,10 @@ public class MainActivity extends AppCompatActivity {
     private void startInfoActivity() {
         Intent intent = new Intent(this, InfoActivity.class);
         startActivity(intent);
+    }
+
+    private void showFilterSliders() {
+
     }
 
 

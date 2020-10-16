@@ -9,6 +9,12 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
          />
 
+    <item android:id="@+id/action_filter"
+        android:title="@string/fitler_title"
+        android:icon="@drawable/baseline_filter_alt_black_24"
+        app:showAsAction="ifRoom|collapseActionView"
+         />
+
     <item
         android:id="@+id/action_settings"
         android:title="@string/settings_title"

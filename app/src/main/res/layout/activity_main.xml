@@ -19,7 +19,31 @@
         android:orientation="vertical"
         >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Population interval:" />
 
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rangePopulation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rangeArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rangeDensity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            />
 
         <TableLayout
 

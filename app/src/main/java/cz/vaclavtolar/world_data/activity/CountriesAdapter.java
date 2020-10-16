@@ -24,6 +24,7 @@ import java.util.List;
 
 import cz.vaclavtolar.world_data.R;
 import cz.vaclavtolar.world_data.dto.Country;
+import cz.vaclavtolar.world_data.dto.IntervalLimits;
 import cz.vaclavtolar.world_data.dto.Settings;
 import cz.vaclavtolar.world_data.service.PreferencesUtil;
 
@@ -48,6 +49,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private Comparator<Country> areaComparator;
     private Comparator<Country> densityComparator;
 
+    private IntervalLimits intervalLimits = new IntervalLimits();
+
     public CountriesAdapter(Activity activity) {
         this.activity = activity;
         this.query = null;
@@ -55,6 +58,10 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    public void setIntervalLimits(IntervalLimits intervalLimits) {
+        this.intervalLimits = intervalLimits;
     }
 
     @NonNull

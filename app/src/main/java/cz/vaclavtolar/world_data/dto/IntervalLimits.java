@@ -4,6 +4,8 @@ public class IntervalLimits {
 
     private long populationMin = Long.MAX_VALUE;
     private long populationMax = 0;
+    private long filterPopulationMin = 0;
+    private long filterPopulationMax = 100;
     private long areaMin = Long.MAX_VALUE;
     private long areaMax = 0;
     private long densityMin = Long.MAX_VALUE;
@@ -23,6 +25,22 @@ public class IntervalLimits {
 
     public void setPopulationMax(long populationMax) {
         this.populationMax = populationMax;
+    }
+
+    public long getFilterPopulationMin() {
+        return filterPopulationMin;
+    }
+
+    public void setFilterPopulationMin(long filterPopulationMin) {
+        this.filterPopulationMin = filterPopulationMin;
+    }
+
+    public long getFilterPopulationMax() {
+        return filterPopulationMax;
+    }
+
+    public void setFilterPopulationMax(long filterPopulationMax) {
+        this.filterPopulationMax = filterPopulationMax;
     }
 
     public long getAreaMin() {

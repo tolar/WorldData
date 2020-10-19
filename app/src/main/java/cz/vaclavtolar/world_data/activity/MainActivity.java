@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -46,6 +47,8 @@ import cz.vaclavtolar.world_data.service.PreferencesUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.google.android.material.slider.LabelFormatter.LABEL_GONE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -150,9 +153,10 @@ public class MainActivity extends AppCompatActivity {
             countriesAdapter.notifyDataSetChanged();
         }
         for (Country ctr: countries) {
-            updateIntervalLimits(intervalLimits, ctr);
+            updateIntervalLimitsWithCountry(intervalLimits, ctr);
         }
-        updateSliders();
+        //updateSliders();
+        initSliders();
 
         Call<List<Country>> call = CountriesService.getInstance().getAllCountries();
         call.enqueue(new Callback<List<Country>>() {
@@ -166,14 +170,14 @@ public class MainActivity extends AppCompatActivity {
                             ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getAlpha2Code()));
                             ctr.setCountryChineseName(CountriesService.getInstance().getCountryChineseName(ctr.getAlpha2Code()));
                         }
-                        updateIntervalLimits(intervalLimits, ctr);
+                        updateIntervalLimitsWithCountry(intervalLimits, ctr);
                         prepareMetadataData(ctr);
                     }
                     removeErrorText();
                     storeDataToPreferences(countries);
                     countriesAdapter.setCountries(countries);
                     countriesAdapter.notifyDataSetChanged();
-                    updateSliders();
+                    //updateSliders();
                 }
             }
 
@@ -182,11 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 addErrorTextView();
                 List<Country> countries = getDataFromPreferences();
                 for (Country ctr: countries) {
-                    updateIntervalLimits(intervalLimits, ctr);
+                    updateIntervalLimitsWithCountry(intervalLimits, ctr);
                 }
                 countriesAdapter.setCountries(countries);
                 countriesAdapter.notifyDataSetChanged();
-                updateSliders();
+                //updateSliders();
             }
         });
 
@@ -205,7 +209,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateIntervalLimits(IntervalLimits intervalLimits, Country ctr) {
+    private void initSliders() {
+        ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getPopulationMin()));
+        ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getPopulationMax()));
+
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setLabelBehavior(LABEL_GONE);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom(0);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueTo(100);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(0f,100f);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(0f,100f);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).addOnChangeListener(new RangeSlider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
+                float filterMinPop = slider.getValues().get(0);
+                float filterMaxPop = slider.getValues().get(1);
+                float minPop = (float) 100 *
+                        (float)((Math.exp(filterMinPop) - Math.exp(intervalLimits.getPopulationMin()) /
+                                (Math.exp(intervalLimits.getPopulationMax()) - Math.exp(intervalLimits.getPopulationMin()))));
+                float maxPop = (float) 100 *
+                        (float)((Math.exp(filterMaxPop) - Math.exp(intervalLimits.getPopulationMin()) /
+                                Math.exp(intervalLimits.getPopulationMax()) - Math.exp(intervalLimits.getPopulationMin())));
+                ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
+                ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
+                intervalLimits.setFilterPopulationMin((long) minPop);
+                intervalLimits.setFilterPopulationMax((long) maxPop);
+                updateCountriesAdapter(intervalLimits);
+            }
+        });
+    }
+
+    private void updateIntervalLimitsWithCountry(IntervalLimits intervalLimits, Country ctr) {
         if (ctr.getPopulation() != null) {
             if (ctr.getPopulation() < intervalLimits.getPopulationMin()) {
                 intervalLimits.setPopulationMin(ctr.getPopulation());
@@ -365,6 +398,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             countriesAdapter.setQuery(removeDiacriticalMarks(query.toLowerCase()));
         }
+        countriesAdapter.notifyDataSetChanged();
+    }
+
+    private void updateCountriesAdapter(IntervalLimits intervalLimits) {
+        countriesAdapter.setIntervalLimits(intervalLimits);
         countriesAdapter.notifyDataSetChanged();
     }
 

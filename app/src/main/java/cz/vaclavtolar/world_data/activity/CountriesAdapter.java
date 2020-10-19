@@ -31,8 +31,8 @@ import cz.vaclavtolar.world_data.service.PreferencesUtil;
 public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.ViewHolder> {
 
     public static final int ROUND_LIMIT = 10;
-    static DecimalFormat formatterNoDecimal;
-    static DecimalFormat formatterWithDecimal;
+    public static DecimalFormat formatterNoDecimal;
+    public static DecimalFormat formatterWithDecimal;
 
     static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -157,7 +157,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         populateOrderForCountries(this.countries);
 
         if (query != null) {
-            List<Country> filteredCountries = new ArrayList<>();
+            List<Country> filteredCountriesByQuery = new ArrayList<>();
             for (int i = 0; i < countries.size(); i++) {
                 Country country = countries.get(i);
 
@@ -166,10 +166,22 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                     countryName = country.getCountryCzechNameNoDiacritics();
                 }
                 if (countryName != null && countryName.contains(query)) {
-                    filteredCountries.add(country);
+                    filteredCountriesByQuery.add(country);
                 }
             }
-            result = filteredCountries;
+            result = filteredCountriesByQuery;
+        }
+        if (intervalLimits != null) {
+            List<Country> filteredCountriesByLimits = new ArrayList<>();
+            for (int i = 0; i < result.size(); i++) {
+                Country country = result.get(i);
+                if (country.getPopulation() < intervalLimits.getPopulationMax() && country.getPopulation() > intervalLimits.getPopulationMin()) {
+                    filteredCountriesByLimits.add(country);
+                }
+
+            }
+            result = filteredCountriesByLimits;
+
         }
         return result;
     }

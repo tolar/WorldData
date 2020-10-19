@@ -2,6 +2,8 @@ package cz.vaclavtolar.world_data.dto;
 
 public class IntervalLimits {
 
+    public static final float ALMOST_ZERO = 0.001f;
+
     private long populationMin = Long.MAX_VALUE;
     private long populationMax = 0;
     private long filterPopulationMin = 0;

@@ -49,6 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.google.android.material.slider.LabelFormatter.LABEL_GONE;
+import static cz.vaclavtolar.world_data.dto.IntervalLimits.ALMOST_ZERO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -224,11 +225,11 @@ public class MainActivity extends AppCompatActivity {
                 float filterMinPop = slider.getValues().get(0);
                 float filterMaxPop = slider.getValues().get(1);
                 float minPop = (float) 100 *
-                        (float)((Math.exp(filterMinPop) - Math.exp(intervalLimits.getPopulationMin()) /
-                                (Math.exp(intervalLimits.getPopulationMax()) - Math.exp(intervalLimits.getPopulationMin()))));
+                        (float)((Math.log(filterMinPop) - Math.log(ALMOST_ZERO) /
+                                (Math.log(intervalLimits.getPopulationMax()) - Math.log(ALMOST_ZERO))));
                 float maxPop = (float) 100 *
-                        (float)((Math.exp(filterMaxPop) - Math.exp(intervalLimits.getPopulationMin()) /
-                                Math.exp(intervalLimits.getPopulationMax()) - Math.exp(intervalLimits.getPopulationMin())));
+                        (float)((Math.log(filterMaxPop) - Math.log(ALMOST_ZERO) /
+                                Math.log(intervalLimits.getPopulationMax()) - Math.log(ALMOST_ZERO)));
                 ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
                 ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
                 intervalLimits.setFilterPopulationMin((long) minPop);

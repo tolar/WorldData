@@ -175,7 +175,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             List<Country> filteredCountriesByLimits = new ArrayList<>();
             for (int i = 0; i < result.size(); i++) {
                 Country country = result.get(i);
-                if (country.getPopulation() < intervalLimits.getPopulationMax() && country.getPopulation() > intervalLimits.getPopulationMin()) {
+                if (country.getPopulation() <= intervalLimits.getFilterPopulationMax() && country.getPopulation() >= intervalLimits.getFilterPopulationMin()) {
                     filteredCountriesByLimits.add(country);
                 }
 

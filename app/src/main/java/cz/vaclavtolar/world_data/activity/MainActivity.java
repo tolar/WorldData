@@ -215,21 +215,17 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getPopulationMax()));
 
         ((RangeSlider)findViewById(R.id.rangePopulation)).setLabelBehavior(LABEL_GONE);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom(0);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom(1);
         ((RangeSlider)findViewById(R.id.rangePopulation)).setValueTo(100);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(0f,100f);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(0f,100f);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(1f,100f);
+        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(1f,100f);
         ((RangeSlider)findViewById(R.id.rangePopulation)).addOnChangeListener(new RangeSlider.OnChangeListener() {
             @Override
             public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
                 float filterMinPop = slider.getValues().get(0);
                 float filterMaxPop = slider.getValues().get(1);
-                float minPop = (float) 100 *
-                        (float)((Math.log(filterMinPop) - Math.log(ALMOST_ZERO) /
-                                (Math.log(intervalLimits.getPopulationMax()) - Math.log(ALMOST_ZERO))));
-                float maxPop = (float) 100 *
-                        (float)((Math.log(filterMaxPop) - Math.log(ALMOST_ZERO) /
-                                Math.log(intervalLimits.getPopulationMax()) - Math.log(ALMOST_ZERO)));
+                float minPop = (float) Math.pow (Math.E, ( (((filterMinPop - 0)/(100 - 1)) * (Math.log(intervalLimits.getPopulationMax() - Math.log(1)))) + Math.log(1)));
+                float maxPop = (float) Math.pow (Math.E, ( (((filterMaxPop - 0)/(100 - 1)) * (Math.log(intervalLimits.getPopulationMax() - Math.log(1)))) + Math.log(1)));
                 ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
                 ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
                 intervalLimits.setFilterPopulationMin((long) minPop);

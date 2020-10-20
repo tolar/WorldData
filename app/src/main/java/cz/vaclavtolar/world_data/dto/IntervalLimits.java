@@ -7,7 +7,7 @@ public class IntervalLimits {
     private long populationMin = Long.MAX_VALUE;
     private long populationMax = 0;
     private long filterPopulationMin = 0;
-    private long filterPopulationMax = 100;
+    private long filterPopulationMax = Long.MAX_VALUE;
     private long areaMin = Long.MAX_VALUE;
     private long areaMax = 0;
     private long densityMin = Long.MAX_VALUE;

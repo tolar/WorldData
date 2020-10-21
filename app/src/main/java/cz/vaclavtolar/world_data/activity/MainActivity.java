@@ -224,8 +224,9 @@ public class MainActivity extends AppCompatActivity {
             public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
                 float filterMinPop = slider.getValues().get(0);
                 float filterMaxPop = slider.getValues().get(1);
-                float minPop = (float) Math.pow (Math.E, ( (((filterMinPop - 0)/(100 - 1)) * (Math.log(intervalLimits.getPopulationMax() - Math.log(1)))) + Math.log(1)));
-                float maxPop = (float) Math.pow (Math.E, ( (((filterMaxPop - 0)/(100 - 1)) * (Math.log(intervalLimits.getPopulationMax() - Math.log(1)))) + Math.log(1)));
+                double base = Math.E;
+                float minPop = (float) Math.pow (base, ( (((filterMinPop - 0)/(100 - 1)) * (Math.log1p(intervalLimits.getPopulationMax() - Math.log1p(0)))) + Math.log1p(0)));
+                float maxPop = (float) Math.pow (base, ( (((filterMaxPop - 0)/(100 - 1)) * (Math.log1p(intervalLimits.getPopulationMax() - Math.log1p(0)))) + Math.log1p(0)));
                 ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
                 ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
                 intervalLimits.setFilterPopulationMin((long) minPop);

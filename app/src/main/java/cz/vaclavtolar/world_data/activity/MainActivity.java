@@ -213,24 +213,65 @@ public class MainActivity extends AppCompatActivity {
     private void initSliders() {
         ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getPopulationMin()));
         ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getPopulationMax()));
+        ((TextView)findViewById(R.id.areaMin)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getAreaMin()));
+        ((TextView)findViewById(R.id.areaMax)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getAreaMax()));
+        ((TextView)findViewById(R.id.densityMin)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getDensityMin()));
+        ((TextView)findViewById(R.id.densityMax)).setText(CountriesAdapter.formatterNoDecimal.format(intervalLimits.getDensityMax()));
 
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setLabelBehavior(LABEL_GONE);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom(1);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueTo(100);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(1f,100f);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues(1f,100f);
-        ((RangeSlider)findViewById(R.id.rangePopulation)).addOnChangeListener(new RangeSlider.OnChangeListener() {
+        initOneSlider((RangeSlider) findViewById(R.id.rangePopulation), IntervalLimits.Filter.POPULATION);
+        initOneSlider((RangeSlider) findViewById(R.id.rangeArea), IntervalLimits.Filter.AREA);
+        initOneSlider((RangeSlider) findViewById(R.id.rangeDensity), IntervalLimits.Filter.DENSITY);
+    }
+
+    private void initOneSlider(RangeSlider sliderView, final IntervalLimits.Filter filter) {
+        sliderView.setLabelBehavior(LABEL_GONE);
+        sliderView.setValueFrom(1);
+        sliderView.setValueTo(100);
+        sliderView.setValues(1f,100f);
+        sliderView.setValues(1f,100f);
+        sliderView.addOnChangeListener(new RangeSlider.OnChangeListener() {
             @Override
             public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
-                float filterMinPop = slider.getValues().get(0);
-                float filterMaxPop = slider.getValues().get(1);
+
+                long maxValue = Long.MAX_VALUE;
+                switch (filter) {
+                    case POPULATION:
+                        maxValue = intervalLimits.getPopulationMax();
+                        break;
+                    case AREA:
+                        maxValue = intervalLimits.getAreaMax();
+                        break;
+                    case DENSITY:
+                        maxValue = intervalLimits.getDensityMax();
+                        break;
+                }
+
+                float filterMin = slider.getValues().get(0);
+                float filterMax = slider.getValues().get(1);
                 double base = Math.E;
-                float minPop = (float) Math.pow (base, ( (((filterMinPop - 0)/(100 - 1)) * (Math.log1p(intervalLimits.getPopulationMax() - Math.log1p(0)))) + Math.log1p(0)));
-                float maxPop = (float) Math.pow (base, ( (((filterMaxPop - 0)/(100 - 1)) * (Math.log1p(intervalLimits.getPopulationMax() - Math.log1p(0)))) + Math.log1p(0)));
-                ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
-                ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
-                intervalLimits.setFilterPopulationMin((long) minPop);
-                intervalLimits.setFilterPopulationMax((long) maxPop);
+                float minPop = (float) Math.pow (base, ( (((filterMin - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
+                float maxPop = (float) Math.pow (base, ( (((filterMax - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
+
+                switch (filter) {
+                    case POPULATION:
+                        ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
+                        ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
+                        intervalLimits.setFilterPopulationMin((long) minPop);
+                        intervalLimits.setFilterPopulationMax((long) maxPop);
+                        break;
+                    case AREA:
+                        ((TextView)findViewById(R.id.areaMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
+                        ((TextView)findViewById(R.id.areaMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
+                        intervalLimits.setFilterAreaMin((long) minPop);
+                        intervalLimits.setFilterAreaMax((long) maxPop);
+                        break;
+                    case DENSITY:
+                        ((TextView)findViewById(R.id.densityMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
+                        ((TextView)findViewById(R.id.densityMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
+                        intervalLimits.setFilterDensityMin((long) minPop);
+                        intervalLimits.setFilterDensityMax((long) maxPop);
+                        break;
+                }
                 updateCountriesAdapter(intervalLimits);
             }
         });

@@ -21,6 +21,7 @@
         >
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -33,6 +34,7 @@
                 android:id="@+id/populationMin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="" />
 
             <TextView
@@ -44,6 +46,7 @@
                 android:id="@+id/populationMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="" />
 
         </LinearLayout>
@@ -56,11 +59,75 @@
             android:layout_height="wrap_content"
             />
 
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Area - from " />
+
+            <TextView
+                android:id="@+id/areaMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" to " />
+
+            <TextView
+                android:id="@+id/areaMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="" />
+
+        </LinearLayout>
+
+
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rangeArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Density - from " />
+
+            <TextView
+                android:id="@+id/densityMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" to " />
+
+            <TextView
+                android:id="@+id/densityMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="" />
+
+        </LinearLayout>
+
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rangeDensity"

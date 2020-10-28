@@ -55,20 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String COUNTRIES_KEY = "countries";
 
-    public static final String CZECHIA = "Czechia";
-    public static final String HOLY_SEE = "Holy See";
-
     public static final String DATA_UPDATED_KEY = "updated";
-    private static final String CABO_VERDE = "Cabo Verde";
-    private static final String BAHAMAS = "Bahamas";
-    private static final String CONGO_BRAZZAVILLE = "Congo (Brazzaville)";
-    private static final String CONGO_KINSHASA = "Congo (Kinshasa)";
-    private static final String ESWATINI = "Eswatini";
-    private static final String GAMBIA = "Gambia";
-    private static final String TAIWAN = "Taiwan";
-    private static final String KOSOVO = "Kosovo";
-    private static final String BURMA = "Burma";
-    private static final String WEST_BANK_AND_GAZA = "West Bank and Gaza";
 
     private CountriesAdapter countriesAdapter;
 
@@ -113,24 +100,33 @@ public class MainActivity extends AppCompatActivity {
                 colTitle  = new SpannableStringBuilder(getString(R.string.population));
                 break;
             case AREA:
-                String areaLabel = getString(R.string.area);
-                String areaLabelWithUnits = areaLabel + " (km2)";
-                SpannableStringBuilder csArea = new SpannableStringBuilder(areaLabelWithUnits);
-                csArea.setSpan(new SuperscriptSpan(), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                csArea.setSpan(new RelativeSizeSpan(0.75f), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                SpannableStringBuilder csArea = getAreaLabelWithUnits();
                 colTitle  = csArea;
                 break;
             case DENSITY:
-                String densityLabel  = getString(R.string.density);
-                String densityLabelWithUnits = densityLabel + " (/km2)";
-                SpannableStringBuilder csDensity = new SpannableStringBuilder(densityLabelWithUnits);
-                csDensity.setSpan(new SuperscriptSpan(), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                csDensity.setSpan(new RelativeSizeSpan(0.75f), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                SpannableStringBuilder csDensity = getDensityLabelWithUnits();
                 colTitle  = csDensity;
-
                 break;
         }
         return colTitle;
+    }
+
+    private SpannableStringBuilder getDensityLabelWithUnits() {
+        String densityLabel  = getString(R.string.density);
+        String densityLabelWithUnits = densityLabel + " (/km2)";
+        SpannableStringBuilder csDensity = new SpannableStringBuilder(densityLabelWithUnits);
+        csDensity.setSpan(new SuperscriptSpan(), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        csDensity.setSpan(new RelativeSizeSpan(0.75f), densityLabelWithUnits.length() - 2, densityLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        return csDensity;
+    }
+
+    private SpannableStringBuilder getAreaLabelWithUnits() {
+        String areaLabel = getString(R.string.area);
+        String areaLabelWithUnits = areaLabel + " (km2)";
+        SpannableStringBuilder csArea = new SpannableStringBuilder(areaLabelWithUnits);
+        csArea.setSpan(new SuperscriptSpan(), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        csArea.setSpan(new RelativeSizeSpan(0.75f), areaLabelWithUnits.length() - 2, areaLabelWithUnits.length() - 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        return csArea;
     }
 
     private void initSettings() {

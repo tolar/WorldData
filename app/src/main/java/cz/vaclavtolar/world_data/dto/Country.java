@@ -2,6 +2,7 @@
 package cz.vaclavtolar.world_data.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class Country {
@@ -9,53 +10,59 @@ public class Country {
     private int order;
 
     private String alpha2Code;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(alpha2Code);
+    }
+
     private String alpha3Code;
-    
+
     private List<String> altSpellings;
-    
+
     private Double area;
-    
+
     private List<String> borders;
-    
+
     private List<String> callingCodes;
-    
+
     private String capital;
-    
+
     private String cioc;
-    
+
     private List<Currency> currencies;
-    
+
     private String demonym;
-    
+
     private String flag;
-    
+
     private Double gini;
-    
+
     private List<Language> languages;
-    
+
     private List<Double> latlng;
-    
+
     private String name;
-    
+
     private String nativeName;
-    
+
     private String numericCode;
-    
+
     private Long population;
 
     private double density;
 
-    
+
     private String region;
-    
+
     private List<RegionalBloc> regionalBlocs;
-    
+
     private String subregion;
-    
+
     private List<String> timezones;
-    
+
     private List<String> topLevelDomain;
-    
+
     private Translations translations;
     private String countryCzechName;
     private String countryCzechNameNoDiacritics;

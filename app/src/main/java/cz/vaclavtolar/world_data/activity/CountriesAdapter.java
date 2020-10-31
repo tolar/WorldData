@@ -175,17 +175,9 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
             List<Country> filteredCountriesByLimits = new ArrayList<>();
             for (int i = 0; i < result.size(); i++) {
                 Country country = result.get(i);
-                if (fitsCountryPopulationLimits(country)) {
+                if (fitsCountryPopulationLimits(country) && fitsCountryAreaLimits(country) && fitsCountryDensityLimits(country)) {
                     filteredCountriesByLimits.add(country);
                 }
-                if (fitsCountryAreaLimits(country)) {
-                    filteredCountriesByLimits.add(country);
-                }
-                if (fitsCountryDensityLimits(country)) {
-                    filteredCountriesByLimits.add(country);
-                }
-
-
             }
             result = filteredCountriesByLimits;
 
@@ -202,7 +194,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     }
 
     private boolean fitsCountryDensityLimits(Country country) {
-        return country.getDensity() <= intervalLimits.getFilterDensityMin() && country.getDensity() >= intervalLimits.getFilterAreaMin();
+        return country.getDensity() <= intervalLimits.getFilterDensityMax() && country.getDensity() >= intervalLimits.getFilterDensityMin();
     }
 
     private void populateOrderForCountries(List<Country> countries) {

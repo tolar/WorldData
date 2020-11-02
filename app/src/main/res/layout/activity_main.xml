@@ -88,6 +88,13 @@
                 android:textStyle="bold"
                 android:text="" />
 
+            <TextView
+                android:id="@+id/areaUnits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+
         </LinearLayout>
 
 
@@ -125,6 +132,12 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="" />
+
+            <TextView
+                android:id="@+id/densityUnits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
 
         </LinearLayout>
 

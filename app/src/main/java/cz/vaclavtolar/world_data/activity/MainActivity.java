@@ -49,7 +49,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.google.android.material.slider.LabelFormatter.LABEL_GONE;
-import static cz.vaclavtolar.world_data.dto.IntervalLimits.ALMOST_ZERO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,10 +86,13 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
     }
 
-    private void setTableTitles() {
+    private void setTitles() {
         Settings settings = PreferencesUtil.getSettingsFromPreferences(getApplicationContext());
         ((TextView)findViewById(R.id.col1_title)).setText(getColumnTitle(settings.getColumn1()));
         ((TextView)findViewById(R.id.col2_title)).setText(getColumnTitle(settings.getColumn2()));
+        ((TextView)findViewById(R.id.areaUnits)).setText(getAreaUnits());
+        ((TextView)findViewById(R.id.densityUnits)).setText(getDensityUnits());
+
     }
 
     private SpannableStringBuilder getColumnTitle(Settings.Column column) {
@@ -100,15 +102,26 @@ public class MainActivity extends AppCompatActivity {
                 colTitle  = new SpannableStringBuilder(getString(R.string.population));
                 break;
             case AREA:
-                SpannableStringBuilder csArea = getAreaLabelWithUnits();
-                colTitle  = csArea;
+                colTitle  = getAreaLabelWithUnits();
                 break;
             case DENSITY:
-                SpannableStringBuilder csDensity = getDensityLabelWithUnits();
-                colTitle  = csDensity;
+                colTitle  = getDensityLabelWithUnits();
                 break;
         }
         return colTitle;
+    }
+
+    private SpannableStringBuilder getSliderUnits(Settings.Column column) {
+        SpannableStringBuilder units = new SpannableStringBuilder();
+        switch (column) {
+            case AREA:
+                units  = getAreaUnits();
+                break;
+            case DENSITY:
+                units  = getDensityUnits();
+                break;
+        }
+        return units;
     }
 
     private SpannableStringBuilder getDensityLabelWithUnits() {
@@ -129,6 +142,22 @@ public class MainActivity extends AppCompatActivity {
         return csArea;
     }
 
+    private SpannableStringBuilder getDensityUnits() {
+        String densityUnits = " /km2";
+        SpannableStringBuilder csDensity = new SpannableStringBuilder(densityUnits);
+        csDensity.setSpan(new SuperscriptSpan(), densityUnits.length() - 1, densityUnits.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        csDensity.setSpan(new RelativeSizeSpan(0.75f), densityUnits.length() - 1, densityUnits.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        return csDensity;
+    }
+
+    private SpannableStringBuilder getAreaUnits() {
+        String areaLabelWithUnits = " km2";
+        SpannableStringBuilder csArea = new SpannableStringBuilder(areaLabelWithUnits);
+        csArea.setSpan(new SuperscriptSpan(), areaLabelWithUnits.length() - 1, areaLabelWithUnits.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        csArea.setSpan(new RelativeSizeSpan(0.75f), areaLabelWithUnits.length() - 1, areaLabelWithUnits.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        return csArea;
+    }
+
     private void initSettings() {
         Settings settings = PreferencesUtil.getSettingsFromPreferences(getApplicationContext());
         if (settings == null) {
@@ -141,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setTableTitles();
+        setTitles();
 
         // nacteme data z preferences
         List<Country> countries = getDataFromPreferences();

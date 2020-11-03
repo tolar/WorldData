@@ -57,6 +57,8 @@
             android:id="@+id/rangePopulation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             />
 
         <LinearLayout
@@ -102,6 +104,8 @@
             android:id="@+id/rangeArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             />
 
         <LinearLayout
@@ -146,6 +150,8 @@
             android:id="@+id/rangeDensity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             />
 
         <TableLayout

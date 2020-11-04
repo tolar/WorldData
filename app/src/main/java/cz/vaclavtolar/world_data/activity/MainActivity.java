@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
                 startSettingsActivity();
                 return true;
             case R.id.action_filter:
-                showFilterSliders();
+                toggleFilter();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -497,8 +497,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showFilterSliders() {
-
+    private void toggleFilter() {
+        View filter = findViewById(R.id.filterContainer);
+        if (filter.getVisibility() == View.GONE) {
+            filter.setVisibility(View.VISIBLE);
+        } else {
+            filter.setVisibility(View.GONE);
+        }
     }
 
 

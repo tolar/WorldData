@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -181,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         for (Country ctr: countries) {
             updateIntervalLimitsWithCountry(intervalLimits, ctr);
         }
-        //updateSliders();
         initSliders();
 
         Call<List<Country>> call = CountriesService.getInstance().getAllCountries();
@@ -503,6 +503,9 @@ public class MainActivity extends AppCompatActivity {
             filter.setVisibility(View.VISIBLE);
         } else {
             filter.setVisibility(View.GONE);
+            intervalLimits.resetFilter();
+            updateCountriesAdapter(intervalLimits);
+            initSliders();
         }
     }
 

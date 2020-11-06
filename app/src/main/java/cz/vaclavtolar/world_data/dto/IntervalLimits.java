@@ -2,8 +2,6 @@ package cz.vaclavtolar.world_data.dto;
 
 public class IntervalLimits {
 
-    public static final float ALMOST_ZERO = 0.001f;
-
     private long populationMin = Long.MAX_VALUE;
     private long populationMax = 0;
     private long filterPopulationMin = 0;
@@ -113,6 +111,15 @@ public class IntervalLimits {
 
     public void setFilterDensityMax(long filterDensityMax) {
         this.filterDensityMax = filterDensityMax;
+    }
+
+    public void resetFilter() {
+        this.filterPopulationMin = populationMin;
+        this.filterPopulationMax = populationMax;
+        this.filterAreaMin = areaMin;
+        this.filterAreaMax = areaMax;
+        this.filterDensityMin = densityMin;
+        this.filterDensityMax = densityMax;
     }
 
     public enum Filter {

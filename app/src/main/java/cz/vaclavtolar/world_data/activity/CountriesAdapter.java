@@ -37,7 +37,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator(' ');
-        formatterNoDecimal = new DecimalFormat("###,###,###", symbols);
+        formatterNoDecimal = new DecimalFormat("###,###,###,###,###", symbols);
         formatterWithDecimal = new DecimalFormat("###,###,###.##", symbols);
     }
 

@@ -254,52 +254,73 @@ public class MainActivity extends AppCompatActivity {
         sliderView.setValueTo(100);
         sliderView.setValues(1f,100f);
         sliderView.setValues(1f,100f);
+        setIntervalLimitsBySliderValue(sliderView,filter);
         sliderView.addOnChangeListener(new RangeSlider.OnChangeListener() {
             @Override
             public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
-
-                long maxValue = Long.MAX_VALUE;
-                switch (filter) {
-                    case POPULATION:
-                        maxValue = intervalLimits.getPopulationMax();
-                        break;
-                    case AREA:
-                        maxValue = intervalLimits.getAreaMax();
-                        break;
-                    case DENSITY:
-                        maxValue = intervalLimits.getDensityMax();
-                        break;
-                }
-
-                float filterMin = slider.getValues().get(0);
-                float filterMax = slider.getValues().get(1);
-                double base = Math.E;
-                float minPop = (float) Math.pow (base, ( (((filterMin - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
-                float maxPop = (float) Math.pow (base, ( (((filterMax - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
-
-                switch (filter) {
-                    case POPULATION:
-                        ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
-                        ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
-                        intervalLimits.setFilterPopulationMin((long) minPop);
-                        intervalLimits.setFilterPopulationMax((long) maxPop);
-                        break;
-                    case AREA:
-                        ((TextView)findViewById(R.id.areaMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
-                        ((TextView)findViewById(R.id.areaMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
-                        intervalLimits.setFilterAreaMin((long) minPop);
-                        intervalLimits.setFilterAreaMax((long) maxPop);
-                        break;
-                    case DENSITY:
-                        ((TextView)findViewById(R.id.densityMin)).setText(CountriesAdapter.formatterNoDecimal.format(minPop));
-                        ((TextView)findViewById(R.id.densityMax)).setText(CountriesAdapter.formatterNoDecimal.format(maxPop));
-                        intervalLimits.setFilterDensityMin((long) minPop);
-                        intervalLimits.setFilterDensityMax((long) maxPop);
-                        break;
-                }
+                setIntervalLimitsBySliderValue(slider, filter);
                 updateCountriesAdapter(intervalLimits);
             }
         });
+    }
+
+    private void setIntervalLimitsBySliderValue(@NonNull RangeSlider slider, IntervalLimits.Filter filter) {
+        long maxValue = Long.MAX_VALUE;
+        switch (filter) {
+            case POPULATION:
+                maxValue = intervalLimits.getPopulationMax();
+                break;
+            case AREA:
+                maxValue = intervalLimits.getAreaMax();
+                break;
+            case DENSITY:
+                maxValue = intervalLimits.getDensityMax();
+                break;
+        }
+
+        double filterMin = slider.getValues().get(0);
+        double filterMax = slider.getValues().get(1);
+        double base = Math.E;
+        double min = Math.pow (base, ( (((filterMin - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
+        double max = Math.pow (base, ( (((filterMax - 0)/(100 - 1)) * (Math.log1p(maxValue - Math.log1p(0)))) + Math.log1p(0)));
+        double roundMin = roundFilterValue(min);
+        double roundMax = roundFilterValue(max);
+        switch (filter) {
+            case POPULATION:
+                ((TextView)findViewById(R.id.populationMin)).setText(CountriesAdapter.formatterNoDecimal.format(roundMin));
+                ((TextView)findViewById(R.id.populationMax)).setText(CountriesAdapter.formatterNoDecimal.format(roundMax));
+                intervalLimits.setFilterPopulationMin((long) roundMin);
+                intervalLimits.setFilterPopulationMax((long) roundMax);
+                break;
+            case AREA:
+                ((TextView)findViewById(R.id.areaMin)).setText(CountriesAdapter.formatterNoDecimal.format(roundMin));
+                ((TextView)findViewById(R.id.areaMax)).setText(CountriesAdapter.formatterNoDecimal.format(roundMax));
+                intervalLimits.setFilterAreaMin((long) roundMin);
+                intervalLimits.setFilterAreaMax((long) roundMax);
+                break;
+            case DENSITY:
+                ((TextView)findViewById(R.id.densityMin)).setText(CountriesAdapter.formatterNoDecimal.format(roundMin));
+                ((TextView)findViewById(R.id.densityMax)).setText(CountriesAdapter.formatterNoDecimal.format(roundMax));
+                intervalLimits.setFilterDensityMin((long) roundMin);
+                intervalLimits.setFilterDensityMax((long) roundMax);
+                break;
+        }
+    }
+
+    private double roundFilterValue(double value) {
+        if (value > 10000000) {
+            return Math.round(value / 100000) * 100000;
+        } else if (value > 1000000) {
+            return Math.round(value / 10000) * 10000;
+        } else if (value > 100000) {
+            return Math.round(value / 1000) * 1000;
+        } else if (value > 10000) {
+            return Math.round(value / 100) * 100;
+        } else if (value > 1000) {
+            return Math.round(value / 10) * 10;
+        } else {
+            return value;
+        }
     }
 
     private void updateIntervalLimitsWithCountry(IntervalLimits intervalLimits, Country ctr) {

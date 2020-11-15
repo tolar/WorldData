@@ -18,5 +18,5 @@
     <string name="second_column">Segunda coluna</string>
 
     <string name="connection_error_message">Falha na atualização. \N Verifique a conexão com a Internet.</string>
-    <string name="fitler_title">Filter</string>
+    <string name="fitler_title">Filtro</string>
 </resources>

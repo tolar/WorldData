@@ -21,6 +21,7 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.info_title);
         setContentView(R.layout.activity_info);
 
         setupToolbar();

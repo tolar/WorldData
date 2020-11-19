@@ -577,4 +577,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onSettingsFabClicked(View view) {
+        startSettingsActivity();
+    }
 }

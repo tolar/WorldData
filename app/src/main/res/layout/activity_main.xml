@@ -17,26 +17,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:paddingTop="10sp"
         android:orientation="vertical"
-        >
+        android:paddingTop="10sp">
 
         <LinearLayout
             android:id="@+id/filterContainer"
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -47,8 +45,8 @@
                         android:id="@+id/populationMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -59,8 +57,8 @@
                         android:id="@+id/populationMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -73,13 +71,13 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -90,8 +88,8 @@
                         android:id="@+id/areaMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -102,8 +100,8 @@
                         android:id="@+id/areaMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/areaUnits"
@@ -123,13 +121,13 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,8 +138,8 @@
                         android:id="@+id/densityMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -152,8 +150,8 @@
                         android:id="@+id/densityMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="" />
+                        android:text=""
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/densityUnits"
@@ -174,35 +172,35 @@
 
         <TableLayout
 
-            android:paddingLeft="10sp"
-            android:paddingRight="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
             android:stretchColumns="1">
 
             <TableRow
-                android:paddingLeft="6sp"
-                android:paddingRight="6sp"
-                android:paddingTop="3sp"
-                android:paddingBottom="3sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="6sp"
+                android:paddingTop="3sp"
+                android:paddingRight="6sp"
+                android:paddingBottom="3sp">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="2sp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textAlignment="textStart"
+                    android:layout_weight="1"
                     android:text=""
+                    android:textAlignment="textStart"
                     android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="4"
                     android:text="@string/country"
-                    android:layout_gravity="center_vertical"
                     android:textAlignment="textStart"
                     android:textSize="12sp" />
 
@@ -211,9 +209,9 @@
                     android:id="@+id/col1_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="4"
                     android:text=""
-                    android:layout_gravity="center_vertical"
                     android:textAlignment="textEnd"
                     android:textSize="12sp" />
 
@@ -221,9 +219,9 @@
                     android:id="@+id/col2_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="4"
                     android:text=""
-                    android:layout_gravity="center_vertical"
                     android:textAlignment="textEnd"
                     android:textSize="12sp" />
 
@@ -240,5 +238,20 @@
             android:scrollbars="vertical" />
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="15dp"
+        android:height="35dp"
+        android:backgroundTint="@color/primaryColor"
+        android:contentDescription="@string/settings_title"
+        android:minHeight="0dp"
+        android:textSize="10sp"
+        android:onClick="onSettingsFabClicked"
+        android:text="@string/settings_title"
+        app:icon="@drawable/baseline_settings_black_18" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

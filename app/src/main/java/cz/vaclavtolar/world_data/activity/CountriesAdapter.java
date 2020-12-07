@@ -100,6 +100,12 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 countryTextView.setText(country.getTranslations().getEs());
             } else if (isSetPortugalLanguage()) {
                 countryTextView.setText(country.getTranslations().getPt());
+            } else if (isSetGermanLanguage()) {
+                countryTextView.setText(country.getTranslations().getDe());
+            } else if (isSetItalianLanguage()) {
+                countryTextView.setText(country.getTranslations().getIt());
+            } else if (isSetJapanLanguage()) {
+                countryTextView.setText(country.getTranslations().getJa());
             } else if (isSetChineseLanguage() && country.getCountryChineseName() != null) {
                 countryTextView.setText(country.getCountryChineseName());
             } else {
@@ -235,6 +241,31 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         }
         return false;
     }
+
+    private boolean isSetGermanLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "de";
+        }
+        return false;
+    }
+
+    private boolean isSetItalianLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "it";
+        }
+        return false;
+    }
+
+    private boolean isSetJapanLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return locales.get(0).getLanguage() == "ja";
+        }
+        return false;
+    }
+
 
     private boolean isSetChineseLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());

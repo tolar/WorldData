@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
                     storeDataToPreferences(countries);
                     countriesAdapter.setCountries(countries);
                     countriesAdapter.notifyDataSetChanged();
-                    //updateSliders();
                 }
             }
 
@@ -216,22 +215,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 countriesAdapter.setCountries(countries);
                 countriesAdapter.notifyDataSetChanged();
-                //updateSliders();
             }
         });
-
-    }
-
-    private void updateSliders() {
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValues((float)intervalLimits.getPopulationMin(), (float)intervalLimits.getPopulationMax());
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueFrom((float)intervalLimits.getPopulationMin());
-        ((RangeSlider)findViewById(R.id.rangePopulation)).setValueTo((float)intervalLimits.getPopulationMax());
-        ((RangeSlider)findViewById(R.id.rangeArea)).setValues((float)intervalLimits.getAreaMin(), (float)intervalLimits.getAreaMax());
-        ((RangeSlider)findViewById(R.id.rangeArea)).setValueFrom((float)intervalLimits.getAreaMin());
-        ((RangeSlider)findViewById(R.id.rangeArea)).setValueTo((float)intervalLimits.getAreaMax());
-        ((RangeSlider)findViewById(R.id.rangeDensity)).setValues((float)intervalLimits.getDensityMin(), (float)intervalLimits.getDensityMax());
-        ((RangeSlider)findViewById(R.id.rangeDensity)).setValueFrom((float)intervalLimits.getDensityMin());
-        ((RangeSlider)findViewById(R.id.rangeDensity)).setValueTo((float)intervalLimits.getDensityMax());
 
     }
 

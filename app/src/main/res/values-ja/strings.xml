@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">国</string>
+    <string name="preference_file_key">cz.vaclavtolar.world_data.PREFERENCE_FILE_KEY</string>
+    <string name="search_hint">国を検索...</string>
+    <string name="search_title">国を検索</string>
+    <string name="info_title">情報</string>
+    <string name="settings_title">設定</string>
+    <string name="population">人口</string>
+    <string name="area">範囲</string>
+    <string name="density">密度</string>
+    <string name="country">国</string>
+    <string name="data_source">情報元</string>
+    <string name="last_update_in_app">モバイルアプリのデータの最終更新</string>
+    <string name="first_column_sorted">最初の列（並べ替え）</string>
+    <string name="second_column">2列目</string>
+    <string name="connection_error_message">更新失敗。</string>
+    <string name="fitler_title">フィルタ</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">بلدان</string>
+    <string name="preference_file_key">cz.vaclavtolar.world_data.PREFERENCE_FILE_KEY</string>
+    <string name="search_hint">البحث عن البلد ...</string>
+    <string name="search_title">البحث في البلد</string>
+    <string name="info_title">معلومات</string>
+    <string name="settings_title">إعدادات</string>
+    <string name="population">تعداد السكان</string>
+    <string name="area">منطقة</string>
+    <string name="density">كثافة</string>
+    <string name="country">بلد</string>
+    <string name="data_source">مصدر البيانات</string>
+    <string name="last_update_in_app">آخر تحديث للبيانات في تطبيق الجوال</string>
+    <string name="first_column_sorted">العمود الأول (مرتبة حسب)</string>
+    <string name="second_column">العمود الثاني</string>
+    <string name="connection_error_message">فشل التحديث.</string>
+    <string name="fitler_title">منقي</string>
+</resources>

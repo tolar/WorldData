@@ -244,11 +244,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="15dp"
-        android:height="35dp"
+        android:height="40dp"
         android:backgroundTint="@color/primaryColor"
         android:contentDescription="@string/settings_title"
         android:minHeight="0dp"
-        android:textSize="10sp"
+        android:textSize="10dp"
         android:onClick="onSettingsFabClicked"
         android:text="@string/settings_title"
         app:icon="@drawable/baseline_settings_black_18" />

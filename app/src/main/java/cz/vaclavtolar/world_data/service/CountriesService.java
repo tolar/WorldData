@@ -313,6 +313,10 @@ public class CountriesService {
         return countryNamesByIso2.get(iso2).getChineseName();
     }
 
+    public String getCountryArabicName(String iso2) {
+        return countryNamesByIso2.get(iso2).getArabicName();
+    }
+
     public static class CountryNames {
         private String czechName;
         private String chineseName;

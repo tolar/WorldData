@@ -78,7 +78,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
         if (country != null) {
 
             TextView orderView = itemView.findViewById(R.id.order);
-            orderView.setText((country.getOrder()) + ".");
+            orderView.setText((formatterNoDecimal.format(country.getOrder())) + ".");
 
             ImageView flagImageView = itemView.findViewById(R.id.flag);
             if (country.getAlpha2Code() != null) {
@@ -108,6 +108,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 countryTextView.setText(country.getTranslations().getJa());
             } else if (isSetChineseLanguage() && country.getCountryChineseName() != null) {
                 countryTextView.setText(country.getCountryChineseName());
+            } else if (isSetArabicLanguage() && country.getCountryArabicName() != null) {
+                countryTextView.setText(country.getCountryArabicName());
             } else {
                 countryTextView.setText(country.getName());
             }
@@ -213,7 +215,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetCzechLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "cs";
+            return "cs".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -221,7 +223,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetFrenchLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "fr";
+            return "fr".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -229,7 +231,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetSpanishLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "es";
+            return "es".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -237,7 +239,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetPortugalLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "pt";
+            return "pt".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -245,7 +247,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetGermanLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "de";
+            return "de".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -253,7 +255,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetItalianLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "it";
+            return "it".equals(locales.get(0).getLanguage());
         }
         return false;
     }
@@ -261,7 +263,15 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
     private boolean isSetJapanLanguage() {
         LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
         if (!locales.isEmpty()) {
-            return locales.get(0).getLanguage() == "ja";
+            return "ja".equals(locales.get(0).getLanguage());
+        }
+        return false;
+    }
+
+    private boolean isSetArabicLanguage() {
+        LocaleListCompat locales = ConfigurationCompat.getLocales(activity.getApplicationContext().getResources().getConfiguration());
+        if (!locales.isEmpty()) {
+            return "ar".equals(locales.get(0).getLanguage());
         }
         return false;
     }

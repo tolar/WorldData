@@ -21,7 +21,6 @@
                 android:layout_width="2sp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:textAlignment="textStart"
                 android:text=""
                 android:textSize="12sp" />
 
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:orientation="vertical"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 >
                 <ImageView
                     android:id="@+id/flag"
@@ -55,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="4"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="end"
                 android:textAlignment="textEnd"
                 android:text=""
                 android:textSize="14sp" />
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="4"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="end"
                 android:textAlignment="textEnd"
                 android:text=""
                 android:textSize="14sp" />

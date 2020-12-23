@@ -68,6 +68,7 @@ public class Country {
     private String countryCzechNameNoDiacritics;
 
     private String countryChineseName;
+    private String countryArabicName;
 
     public String getAlpha2Code() {
         return alpha2Code;
@@ -283,6 +284,14 @@ public class Country {
 
     public void setCountryChineseName(String countryChineseName) {
         this.countryChineseName = countryChineseName;
+    }
+
+    public String getCountryArabicName() {
+        return countryArabicName;
+    }
+
+    public void setCountryArabicName(String countryArabicName) {
+        this.countryArabicName = countryArabicName;
     }
 
     public void setCountryCzechNameNoDiacritics(String countryCzechNameNoDiacritics) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telecom.ConnectionService;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -195,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                         if (ctr.getAlpha2Code() != null) {
                             ctr.setCountryCzechName(CountriesService.getInstance().getCountryCzechName(ctr.getAlpha2Code()));
                             ctr.setCountryChineseName(CountriesService.getInstance().getCountryChineseName(ctr.getAlpha2Code()));
+                            ctr.setCountryArabicName(CountriesService.getInstance().getCountryArabicName(ctr.getAlpha2Code()));
                         }
                         updateIntervalLimitsWithCountry(intervalLimits, ctr);
                         prepareMetadataData(ctr);

@@ -144,12 +144,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 col2TextView.setText("-");
             }
 
-            if (index != 0 && index % 20 == 0) {
-                Log.d("AD show", "AS show for index " + index);
-                AdView mAdView = itemView.findViewById(R.id.adView);
+            AdView mAdView = itemView.findViewById(R.id.adView);
+            if (index != 0 && index % 10 == 0) {
+                Log.e("AD show", "AS show for index " + index + country.getName());
                 AdRequest adRequest = new AdRequest.Builder().build();
                 mAdView.loadAd(adRequest);
                 mAdView.setVisibility(View.VISIBLE);
+            } else {
+                mAdView.setVisibility(View.GONE);
             }
         }
     }

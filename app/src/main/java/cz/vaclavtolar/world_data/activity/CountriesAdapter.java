@@ -1,7 +1,9 @@
 package cz.vaclavtolar.world_data.activity;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,9 +13,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.os.ConfigurationCompat;
 import androidx.core.os.LocaleListCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Visibility;
 
 import com.ahmadrosid.svgloader.SvgLoader;
 import com.blongho.country_data.World;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -137,6 +142,14 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
                 }
             } else {
                 col2TextView.setText("-");
+            }
+
+            if (index != 0 && index % 20 == 0) {
+                Log.d("AD show", "AS show for index " + index);
+                AdView mAdView = itemView.findViewById(R.id.adView);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+                mAdView.setVisibility(View.VISIBLE);
             }
         }
     }

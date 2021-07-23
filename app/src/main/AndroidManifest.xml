@@ -35,6 +35,11 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5120788826206660~6214244626" />
+
     </application>
 
 </manifest>

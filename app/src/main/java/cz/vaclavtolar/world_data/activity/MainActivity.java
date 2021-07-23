@@ -29,6 +29,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.slider.RangeSlider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -77,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolbar();
         initSettings();
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+
     }
 
     private void setupToolbar() {

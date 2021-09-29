@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import static cz.vaclavtolar.world_data.service.CountriesApi.ACCESS_KEY;
 import static cz.vaclavtolar.world_data.service.CountriesApi.BASE_URL;
 
 public class CountriesService {
@@ -302,7 +303,7 @@ public class CountriesService {
     }
 
     public Call<List<Country>> getAllCountries() {
-        return countriesApi.getAllCountries();
+        return countriesApi.getAllCountries(ACCESS_KEY);
     }
 
     public String getCountryCzechName(String iso2) {

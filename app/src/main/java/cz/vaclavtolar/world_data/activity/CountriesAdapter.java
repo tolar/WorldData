@@ -146,7 +146,6 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.View
 
             AdView mAdView = itemView.findViewById(R.id.adView);
             if (index != 0 && index % 10 == 0) {
-                Log.e("AD show", "AS show for index " + index + country.getName());
                 AdRequest adRequest = new AdRequest.Builder().build();
                 mAdView.loadAd(adRequest);
                 mAdView.setVisibility(View.VISIBLE);

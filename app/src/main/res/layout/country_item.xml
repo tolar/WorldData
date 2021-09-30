@@ -80,9 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:visibility="gone"
+            android:visibility="visible"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-5120788826206660~6214244626">
+            ads:adUnitId="ca-app-pub-5120788826206660/1352611205">
         </com.google.android.gms.ads.AdView>
 
     </TableLayout>
